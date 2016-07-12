@@ -1,0 +1,57 @@
+{
+    "configurations": {
+        "pdf" : false,
+        "html": true,
+        "tex":  false
+    },
+
+    "header" : {
+        "firstname": "Value Adder",
+        "email": "myid:)@gmail.com",
+        "phone": "+9999999999",
+        "talents": ["Python", "C/C++", "Java", "Javascript"]
+    },
+
+    "experience":{
+        "items": [
+            {
+                "title": "Senior Software Developer/Lead",
+                "organisation": "Nokia, Here.com, Berlin",
+                "duration": "Dec. 2011 - Present",
+                "projects": [
+                    "Project responsibilites category One",
+                    "Project responsibilites category Two",
+                    "Project responsibilites category Three"
+
+                ],
+                "technologies": {
+                    "tools": [
+                        "Python",
+                        "Django",
+                        "Json",
+                        "JavaScript"
+                    ]
+                }
+            },
+            {
+                "title": "Senior Software Developer/Lead",
+                "organisation": "Nokia, Here.com, Berlin",
+                "duration": "Dec. 2011 - Present",
+                "projects": [
+                    "Project responsibilites category One",
+                    "Project responsibilites category Two",
+                    "Project responsibilites category Three"
+
+                ],
+                "technologies": {
+                    "tools": [
+                        "Python",
+                        "Django",
+                        "Json",
+                        "JavaScript"
+                    ]
+                }
+            }
+        ]
+    }
+}

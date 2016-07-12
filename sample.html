@@ -1,0 +1,73 @@
+
+<link rel="stylesheet" type="text/css" href="public/css/screen.css" />
+
+<body>
+<div id="page">
+	<div id="top-contact">
+		<div class="contact-details">
+			<div class="icon-square"></div> <div id="email"></div>
+			<div class="icon-square"></div> <div id="phone"></div>
+		</div>
+	</div>
+
+    <h1 class="emphnext">Value Adder</h1>
+	<span id="talents" class="stars" style="clear:left">
+	</span>
+	<br><br>
+
+	<h2><div class="icon-briefcase icon-square"></div> Experience</h2>
+	<div id="exps">
+	</div>
+
+
+</div><!-- End Page -->
+
+<script src="js/d3/d3.v3.min.js"></script>
+<script type="text/javascript">
+
+	d3.json("data.json", function(a, b) {
+			email = d3.select('#email');
+			email.text(b.header.email);
+
+			phone = d3.select('#phone');
+			phone.text(b.header.phone);
+
+			d3.select("#talents").text(b.header.talents.join(" "));
+
+			/*
+			d3.select("#title").text(b.experience.items[0].title);
+			d3.select("#organisation").text(b.experience.items[0].organisation);
+			d3.select("#duration").text(b.experience.items[0].duration);
+
+			d3.select("#projects").text(b.experience.items[0].projects[0]);
+			d3.select("#technologies").text(b.experience.items[0].technologies.tools.join(" "));
+			*/
+
+			//var projects = b.experience.items[0].projects;
+			var items = b.experience.items;
+
+			exps = d3.select("#exps")
+				.selectAll("ul")
+				.data(items)
+				.enter()
+				.append("ul")
+				.append("li");
+
+			ids = ["title", "duration", "organisation"]
+
+			exps.selectAll("div")
+			.data(ids)
+			.enter()
+			.append("div")
+			.attr("id", function(d){return d;})
+			.text(function(d){return d;})
+			;
+
+			exps.append("ul")
+				.append("li")
+				.text(function(d){return d.projects[0];})
+		}
+	);
+
+</script>
+</body>
