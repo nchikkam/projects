@@ -1,0 +1,97 @@
+
+<link rel="stylesheet" type="text/css" href="public/css/screen.css" />
+
+<body>
+<div id="page">
+	<div id="top-contact">
+		<div class="contact-details">
+			<div class="icon-square"></div> <div id="email"></div>
+			<div class="icon-square"></div> <div id="phone"></div>
+		</div>
+	</div>
+
+    <h1 id="name" class="emphnext">Narayana Chikkam</h1>
+	<span id="talents" class="stars" style="clear:left">
+	</span>
+	<br><br>
+
+	<h2><div class="icon-briefcase icon-square"></div> Experience</h2>
+	<div id="exps">
+	</div>
+
+
+	<h2>Education</h2><div id="education" class="icon-briefcase"></div>
+
+	<h2>Opensource</h2><div id="opensource" class="icon-briefcase"></div>
+
+</div><!-- End Page -->
+
+<script src="js/d3/d3.v3.min.js"></script>
+<script type="text/javascript">
+
+	d3.json("./data.json", function(a, b) {
+		//Header Section
+		email = d3.select('#email');
+		email.text(b.header.email);
+
+		phone = d3.select('#phone');
+		phone.text(b.header.phone);
+
+		d3.select("#talents").text(b.header.talents.join(" "));
+		var items = b.experience.items;
+
+		// Experience Section
+		exps = d3.select("#exps")
+			.selectAll("ul")
+			.data(items)
+			.enter()
+			.append("ul")
+			.append("li")
+			.each(function(d, i){
+				d3.select(this).selectAll("div")
+					.data(['title', 'duration', 'organisation'])
+					.enter()
+					.append("div")
+					.attr("id", function(id){return id;})
+					.text(function(g){return items[i][g];})
+			}
+			);
+		// Projects
+		exps.each(function(d, i){
+			d3.select(this).selectAll("ul")
+			.data(d.projects)
+			.enter()
+			.append("ul")
+			.append("li")
+			.text(function(d, i){return d;})
+		});
+		// Tools Used
+		exps.append("ul")
+			.append("li")
+			.text(function(d){return d.technologies.tools.join(" ");
+			});
+
+		//education
+		d3.select("#education")
+			.selectAll("ul")
+			.data(b.education)
+			.enter()
+			.append("ul")
+			.append("li")
+			.text(function(d, i){return b.education[i];});
+
+		// Open source contributions
+		d3.select("#opensource")
+			.selectAll("ul")
+			.data(b.opensource)
+			.enter()
+			.append("ul")
+			.append("li")
+			.text(function(d, i){
+				return b.opensource[i];
+			});
+		}
+	);
+
+</script>
+</body>
