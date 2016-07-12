@@ -25,7 +25,7 @@
 <script src="js/d3/d3.v3.min.js"></script>
 <script type="text/javascript">
 
-	d3.json("data.json", function(a, b) {
+	d3.json("./data.json", function(a, b) {
 			email = d3.select('#email');
 			email.text(b.header.email);
 
@@ -51,21 +51,28 @@
 				.data(items)
 				.enter()
 				.append("ul")
-				.append("li");
-
-			ids = ["title", "duration", "organisation"]
-
-			exps.selectAll("div")
-			.data(ids)
-			.enter()
-			.append("div")
-			.attr("id", function(d){return d;})
-			.text(function(d){return d;})
-			;
+				.append("li")
+				.each(function(d, i){
+					d3.select(this).selectAll("div")
+						.data(['title', 'duration', 'organisation'])
+						.enter()
+						.append("div")
+						.attr("id", function(id){return id;})
+						.text(function(g){return items[i][g];})
+				}
+				);
 
 			exps.append("ul")
 				.append("li")
-				.text(function(d){return d.projects[0];})
+				.text(function(d){return d.projects[0];
+				});
+
+			exps.append("ul")
+				.append("li")
+				.text(function(d){return d.technologies.tools.join(" ");
+				});
+
+
 		}
 	);
 
