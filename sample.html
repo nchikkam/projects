@@ -10,7 +10,7 @@
 		</div>
 	</div>
 
-    <h1 class="emphnext">Value Adder</h1>
+    <h1 id="name" class="emphnext">Narayana Chikkam</h1>
 	<span id="talents" class="stars" style="clear:left">
 	</span>
 	<br><br>
@@ -20,59 +20,76 @@
 	</div>
 
 
+	<h2>Education</h2><div id="education" class="icon-briefcase"></div>
+
+	<h2>Opensource</h2><div id="opensource" class="icon-briefcase"></div>
+
 </div><!-- End Page -->
 
 <script src="js/d3/d3.v3.min.js"></script>
 <script type="text/javascript">
 
 	d3.json("./data.json", function(a, b) {
-			email = d3.select('#email');
-			email.text(b.header.email);
+		//Header Section
+		email = d3.select('#email');
+		email.text(b.header.email);
 
-			phone = d3.select('#phone');
-			phone.text(b.header.phone);
+		phone = d3.select('#phone');
+		phone.text(b.header.phone);
 
-			d3.select("#talents").text(b.header.talents.join(" "));
+		d3.select("#talents").text(b.header.talents.join(" "));
+		var items = b.experience.items;
 
-			/*
-			d3.select("#title").text(b.experience.items[0].title);
-			d3.select("#organisation").text(b.experience.items[0].organisation);
-			d3.select("#duration").text(b.experience.items[0].duration);
+		// Experience Section
+		exps = d3.select("#exps")
+			.selectAll("ul")
+			.data(items)
+			.enter()
+			.append("ul")
+			.append("li")
+			.each(function(d, i){
+				d3.select(this).selectAll("div")
+					.data(['title', 'duration', 'organisation'])
+					.enter()
+					.append("div")
+					.attr("id", function(id){return id;})
+					.text(function(g){return items[i][g];})
+			}
+			);
+		// Projects
+		exps.each(function(d, i){
+			d3.select(this).selectAll("ul")
+			.data(d.projects)
+			.enter()
+			.append("ul")
+			.append("li")
+			.text(function(d, i){return d;})
+		});
+		// Tools Used
+		exps.append("ul")
+			.append("li")
+			.text(function(d){return d.technologies.tools.join(" ");
+			});
 
-			d3.select("#projects").text(b.experience.items[0].projects[0]);
-			d3.select("#technologies").text(b.experience.items[0].technologies.tools.join(" "));
-			*/
+		//education
+		d3.select("#education")
+			.selectAll("ul")
+			.data(b.education)
+			.enter()
+			.append("ul")
+			.append("li")
+			.text(function(d, i){return b.education[i];});
 
-			//var projects = b.experience.items[0].projects;
-			var items = b.experience.items;
-
-			exps = d3.select("#exps")
-				.selectAll("ul")
-				.data(items)
-				.enter()
-				.append("ul")
-				.append("li")
-				.each(function(d, i){
-					d3.select(this).selectAll("div")
-						.data(['title', 'duration', 'organisation'])
-						.enter()
-						.append("div")
-						.attr("id", function(id){return id;})
-						.text(function(g){return items[i][g];})
-				}
-				);
-
-			exps.append("ul")
-				.append("li")
-				.text(function(d){return d.projects[0];
-				});
-
-			exps.append("ul")
-				.append("li")
-				.text(function(d){return d.technologies.tools.join(" ");
-				});
-
-
+		// Open source contributions
+		d3.select("#opensource")
+			.selectAll("ul")
+			.data(b.opensource)
+			.enter()
+			.append("ul")
+			.append("li")
+			.text(function(d, i){
+				return b.opensource[i];
+			});
 		}
 	);
 

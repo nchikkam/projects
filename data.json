@@ -6,11 +6,23 @@
     },
 
     "header" : {
-        "firstname": "Value Adder",
+        "firstname": "Narayana Chikkam",
         "email": "nchikkam@gmail.com",
         "phone": "available-on-request",
         "talents": ["Python", "C/C++", "Java", "Javascript", "Passion"]
     },
+
+    "education":[
+        "Bachelor’s degree in Computer Science from Jawaharlal Nehru Technological University in 2003 being University topper in a row of two consequtive semesters",
+        "Diploma in Polytechnique and Engineering with collage topper award in 1999"
+    ],
+
+    "opensource":[
+        ["algorithms", "http://algoprdgms.appspot.com/"],
+        ["git",        "github.com/nchikkam"],
+        ["nodejs",     "https://www.npmjs.com/~nchikkam"],
+        ["python",     "https://code.activestate.com/recipes/users/4174427/"]
+    ],
 
     "experience":{
         "items": [
