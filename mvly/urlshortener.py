@@ -33,6 +33,7 @@ class MainPage(webapp2.RequestHandler):
                                           URL_SHORTNER_NAME)
         query = Entry.query(
             ancestor=urldb_key(url_shortener)).order(-Entry.date)
+
         rows = query.fetch(10)
 
         template_values = {

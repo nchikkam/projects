@@ -53,7 +53,7 @@
       {% for entry in entries %}
       <div class="row">
           An anonymous person wrote:
-        <blockquote>{{ entry.content }} {{ entry.date }}</blockquote>
+        <blockquote>{{ entry.content }} {{ entry.date }} {{ entry.key.id() }}</blockquote>
 
       </div>
       {% endfor %}
