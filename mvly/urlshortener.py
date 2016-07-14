@@ -29,6 +29,7 @@ def urldb_key(url_shortener=URL_SHORTNER_NAME):
 class Entry(ndb.Model):
     url = ndb.StringProperty(indexed=False)
     shortened = ndb.StringProperty(indexed=False)
+    id = ndb.IntegerProperty()
     duration = ndb.StringProperty(indexed=False)
     date = ndb.DateTimeProperty(auto_now_add=True)
 
@@ -60,12 +61,25 @@ class URLShortenerHandler(webapp2.RequestHandler):
         entry.put()
 
         entry.shortened = baseUtil.toBase(entry.key.id())
+        entry.id = entry.key.id()
         entry.put()
 
         query_params = {'url_shortener': url_shortener}
         self.redirect('/?' + urllib.urlencode(query_params))
 
+class Redirecter(webapp2.RequestHandler):
+    def get(self):
+        base62Encoded = self.request.get('t')
+        id = int(baseUtil.toDec(base62Encoded))
+
+        query = Entry.query(Entry.id == id)
+        rows = query.fetch(10)
+
+        self.redirect(str(rows[0].url))
+
+
 app = webapp2.WSGIApplication([
     ('/', MainPage),
     ('/shorten', URLShortenerHandler),
+    ('/r', Redirecter),
 ], debug=True)
