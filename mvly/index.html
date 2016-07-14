@@ -49,22 +49,37 @@
       </div>
     </div>
     <div class="container">
-      <!-- [START greetings] -->
-      {% for entry in entries %}
-      <div class="row">
-          An anonymous person wrote:
-        <blockquote>{{ entry.content }} {{ entry.date }} {{ entry.key.id() }}</blockquote>
-
-      </div>
-      {% endfor %}
-      <!-- [END greetings] -->
 
       <form action="/shorten" method="post">
-        <div><textarea name="content" class="input-block-level" rows="1"></textarea></div>
+        <div><textarea name="url" class="input-block-level" rows="1"></textarea></div>
         <div><input type="submit" class="btn btn-large btn-primary" value="shorten"></div>
       </form>
 
       <hr>
+
+      Shortened URL(s) So Far:
+      {% for entry in entries %}
+          <table border="1">
+            <tr>
+              <td>
+                Original
+              </td>
+              <td>
+                <a href="{{ entry.url }}">{{ entry.url }}</a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Shortened
+              </td>
+              <td>
+                <a href="http://localhost:8080/{{ entry.shortened }}">http://localhost:8080/{{ entry.shortened }}</a>
+              </td>
+
+            </tr>
+          </table>
+
+      {% endfor %}
 
     </div>
   </body>

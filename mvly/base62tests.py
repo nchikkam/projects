@@ -1,5 +1,5 @@
 import unittest
-from util.base62 import (
+from lib.base62 import (
     Base62Util
 )
 
@@ -20,6 +20,11 @@ class Base62UtilTest(unittest.TestCase):
     def testDecmialToBase62SimpleCase(self):
         subject = Base62Util()
         self.assertEqual('64', subject.toDec('12'))
+
+    def testSample(self):
+        subject = Base62Util()
+        self.assertEqual('sXDVELneo', subject.toBase(6323566249246720))
+        self.assertEqual('mw0iXTwjK', subject.toBase(4916191365693440))
 
     def testRegression(self):
         subject = Base62Util()
