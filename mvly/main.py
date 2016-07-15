@@ -52,6 +52,21 @@ class MainPage(webapp2.RequestHandler):
 
 class URLShortenerHandler(webapp2.RequestHandler):
 
+    def get(self):
+        url_shortener = self.request.get('url_shortener',
+                                          URL_SHORTNER_NAME)
+        query = Entry.query(
+            ancestor=urldb_key(url_shortener)).order(-Entry.date)
+
+        rows = query.fetch(10)
+
+        template_values = {
+            'entries': rows
+        }
+
+        template = JINJA_ENVIRONMENT.get_template('urlshortener.html')
+        self.response.write(template.render(template_values))
+
     def post(self):
         url_shortener = self.request.get('url_shortener',
                                           URL_SHORTNER_NAME)
@@ -82,4 +97,6 @@ app = webapp2.WSGIApplication([
     ('/', MainPage),
     ('/shorten', URLShortenerHandler),
     ('/r', Redirecter),
+    ('/ttt', None),
+    ('/jsonparser', None),
 ], debug=True)

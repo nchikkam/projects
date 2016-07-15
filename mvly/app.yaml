@@ -14,7 +14,7 @@ handlers:
   static_dir: bootstrap
 
 - url: /.*
-  script: urlshortener.app
+  script: main.app
 # [END handlers]
 
 # [START libraries]
