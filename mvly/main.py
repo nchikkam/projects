@@ -14,6 +14,7 @@ from lib.base62 import (
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__) + "/templates"),
+    #loader=jinja2.FileSystemLoader(os.path.dirname(__file__) ),
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 
@@ -34,21 +35,9 @@ class Entry(ndb.Model):
     date = ndb.DateTimeProperty(auto_now_add=True)
 
 class MainPage(webapp2.RequestHandler):
-
     def get(self):
-        url_shortener = self.request.get('url_shortener',
-                                          URL_SHORTNER_NAME)
-        query = Entry.query(
-            ancestor=urldb_key(url_shortener)).order(-Entry.date)
-
-        rows = query.fetch(10)
-
-        template_values = {
-            'entries': rows
-        }
-
         template = JINJA_ENVIRONMENT.get_template('index.html')
-        self.response.write(template.render(template_values))
+        self.response.write(template.render({}))
 
 class URLShortenerHandler(webapp2.RequestHandler):
 
@@ -97,6 +86,11 @@ class TicTacToe(webapp2.RequestHandler):
         template = JINJA_ENVIRONMENT.get_template('ttt.html')
         self.response.write(template.render({}))
 
+class TicTacToe4x4(webapp2.RequestHandler):
+    def get(self):
+        template = JINJA_ENVIRONMENT.get_template('ttt4x4.html')
+        self.response.write(template.render({}))
+
 class JsonResumeParser(webapp2.RequestHandler):
     def get(self):
         template = JINJA_ENVIRONMENT.get_template('jsonparser.html')
@@ -107,5 +101,6 @@ app = webapp2.WSGIApplication([
     ('/urlshortener', URLShortenerHandler),
     ('/r', Redirecter),
     ('/ttt', TicTacToe),
+    ('/ttt4x4', TicTacToe4x4),
     ('/jsonparser', JsonResumeParser),
 ], debug=False)
