@@ -104,8 +104,8 @@ class JsonResumeParser(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
     ('/', MainPage),
-    ('/shorten', URLShortenerHandler),
+    ('/urlshortener', URLShortenerHandler),
     ('/r', Redirecter),
     ('/ttt', TicTacToe),
     ('/jsonparser', JsonResumeParser),
-], debug=True)
+], debug=False)

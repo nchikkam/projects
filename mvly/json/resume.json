@@ -1,0 +1,184 @@
+{
+    "configurations": {
+        "pdf" : false,
+        "html": true,
+        "tex":  false
+    },
+
+    "header" : {
+        "firstname": "Narayana Chikkam",
+        "email": "nchikkam@gmail.com",
+        "phone": "available-on-request",
+        "talents": ["Python", "C/C++", "Java", "Javascript", "Passion"]
+    },
+
+    "education":[
+        "Bachelor’s degree in Computer Science from Jawaharlal Nehru Technological University in 2003 being University topper in a row of two consequtive semesters",
+        "Diploma in Polytechnique and Engineering with collage topper award in 1999"
+    ],
+
+    "opensource":[
+        ["algorithms", "http://algoprdgms.appspot.com/"],
+        ["git",        "github.com/nchikkam"],
+        ["nodejs",     "https://www.npmjs.com/~nchikkam"],
+        ["python",     "https://code.activestate.com/recipes/users/4174427/"]
+    ],
+
+    "experience":{
+        "items": [
+            {
+                "title": "Senior Software Developer/Lead",
+                "organisation": "Nokia Berlin, maps.here.com",
+                "duration": "Dec. 2011 - Present",
+                "projects": [
+                    "Here maps Berlin is specialized in map applications for the windows phone and GPS devices. I have been part of the core Traffic team in designing and automating various features."
+                ],
+                "technologies": {
+                    "tools": [
+                        "Java",
+                        "Python",
+                        "Ruby",
+                        "Cucumber",
+                        "JavaScript",
+                        "Jenkins",
+                        "Go",
+                        "Map Tile Systems",
+                        "AWS",
+                        "Docker",
+                        "Amazon S3",
+                        "GIT", 
+                        "Maven"
+                    ]
+                }
+            },
+            {
+                "title": "Senior Staffmember/Specialist",
+                "organisation": "Yellowpages.com.mt, Malta",
+                "duration": "Dec. 2010 - Dec. 2011",
+                "projects": [
+                    "Redesigning the whole internal organization of the code and modules, Autosuggest for the search functionality.",
+                    "Optimization of stored procedures and analyzing big queries"
+
+                ],
+                "technologies": {
+                    "tools": [
+                        "C#",
+                        ".net",
+                        "IIS",
+                        "Subversion",
+                        "MYSQL",
+                        "ORACLE"
+                    ]
+                }
+            },
+            {
+                "title": "Senior Developer",
+                "organisation": "Uniblue.com, Malta",
+                "duration": "May. 2010 - Dec. 2010",
+                "projects": [
+                    "Worked on Registry Cleaning Software tools written in Python and C++",
+                    "Driver Scanner tool that diagnoses the problems with the hard disk drives and reports the issues on a regular basis to the end users",
+                    "Process explorer web application that helps users to find what a given process is actually meant for",
+                    "Generating the descriptoins for more than 30 languages using tools Systran, google translator and bing translator"
+                ],
+                "technologies": {
+                    "tools": [
+                        "C++",
+                        "Python",
+                        "Perl",
+                        "Javascript",
+                        "Unit and Integration testing tools",
+                        "Systran"
+                    ]
+                }
+            },
+            {
+                "title": "Senior Software Developer",
+                "organisation": "SabreHoldings.com, Bangalore, India",
+                "duration": "Jul. 2009 - May. 2010",
+                "projects": [
+                    "The one thing I worked here that had a benefit was writing and analyzing ILOG Rules, a business rules processing framework that allows business analysts to make quick and effective decisions based on Airline Revenue Data"
+
+                ],
+                "technologies": {
+                    "tools": [
+                        "C++",
+                        "Python",
+                        "Java",
+                        "Maven",
+                        "Subversion",
+                        "ILOG JRules",
+                        "Custom Airline Revenue Management tools like Airmax"
+                    ]
+                }
+            },
+            {
+                "title": "Senior Software Engineer",
+                "organisation": "Yahoo.com, Bangalore, India",
+                "duration": "Jan. 2007 - Apr. 2009",
+                "projects": [
+                    "Generating demographical data from 14TB of logs by using a distributed framework that mines the logs into small data marts for effective decision making. Technologies used were Linux, Python, Perl, C++ and a framework similar to Hadoop"
+
+                ],
+                "technologies": {
+                    "tools": [
+                        "C++",
+                        "Python",
+                        "Java",
+                        "Maven",
+                        "Subversion",
+                        "Linux",
+                        "Freebsd",
+                        "Perl",
+                        "Hadoop"
+                    ]
+                }
+            },
+            {
+                "title": "SDE(Software Development Engineer)",
+                "organisation": "Amazon.com, Chennai, India",
+                "duration": "Dec. 2005 - Jan. 2007",
+                "projects": [
+                    "Todo"
+                ],
+                "technologies": {
+                    "tools": [
+                        "C++",
+                        "Python",
+                        "Java",
+                        "Maven",
+                        "Subversion",
+                        "Clearcase",
+                        "Linux",
+                        "Freebsd",
+                        "Perl"
+                    ]
+                }
+            },
+            {
+                "title": "Systems Software Engineer",
+                "organisation": "hp.com, Bangalore, India",
+                "duration": "Oct. 2003 - Dec. 2005",
+                "projects": [
+                    "Worked on a Diagnostic tool that diagnoses issues with the tape drives and cartridges by contributing more than 50K loc in C++ and VC++",
+                    "Wrote many scripts in a custom language developed especially for the tests using lex, yacc and custom compilers",
+                    "Developed a model for the CIMM [Common Information Management Modules] in Java for the monitoring of the racks filled drives and devices"
+                ],
+                "technologies": {
+                    "tools": [
+                        "C++",
+                        "VC++",
+                        "Java",
+                        "Maven",
+                        "ant",
+                        "Subversion",
+                        "Clearcase",
+                        "Linux",
+                        "Perl"
+                    ]
+                }
+            }
+
+        ]
+    }
+}
