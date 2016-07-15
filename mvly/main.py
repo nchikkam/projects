@@ -92,11 +92,20 @@ class Redirecter(webapp2.RequestHandler):
 
         self.redirect(str(rows[0].url))
 
+class TicTacToe(webapp2.RequestHandler):
+    def get(self):
+        template = JINJA_ENVIRONMENT.get_template('ttt.html')
+        self.response.write(template.render({}))
+
+class JsonResumeParser(webapp2.RequestHandler):
+    def get(self):
+        template = JINJA_ENVIRONMENT.get_template('jsonparser.html')
+        self.response.write(template.render({}))
 
 app = webapp2.WSGIApplication([
     ('/', MainPage),
     ('/shorten', URLShortenerHandler),
     ('/r', Redirecter),
-    ('/ttt', None),
-    ('/jsonparser', None),
+    ('/ttt', TicTacToe),
+    ('/jsonparser', JsonResumeParser),
 ], debug=True)

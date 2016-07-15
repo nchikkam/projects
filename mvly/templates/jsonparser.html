@@ -1,87 +1,97 @@
-<!DOCTYPE html>
-{% autoescape true %}
-<html>
-  <head>
-    <!-- [START css] -->
-    <link type="text/css" rel="stylesheet" href="/bootstrap/css/bootstrap.css" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
-    <!-- [END css] -->
-    <style type="text/css">
-      body {
-        padding-top: 40px;
-        padding-bottom: 40px;
-        background-color: #f5f5f5;
-      }
-      blockquote {
-        margin-bottom: 10px;
-        border-left-color: #bbb;
-      }
-      form {
-        margin-top: 10px;
-      }
-      .form-signin input[type="text"] {
-        font-size: 16px;
-        height: auto;
-        margin-bottom: 15px;
-        padding: 7px 9px;
-      }
-      .row {
-        margin-left: 0px;
-        margin-top: 10px;
-        overflow: scroll;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="brand" href="#">URL Shortener</a>
-          <!--<div class="nav-collapse collapse pull-right">
-            <a href="{{ url|safe }}" class="btn">{{ url_linktext }}</a>
-          </div>-->
-        </div>
-      </div>
-    </div>
-    <div class="container">
 
-      <form action="/shorten" method="post">
-        <div><textarea name="url" class="input-block-level" rows="1"></textarea></div>
-        <div><input type="submit" class="btn btn-large btn-primary" value="shorten"></div>
-      </form>
+<link rel="stylesheet" type="text/css" href="/stylesheets/screen.css" />
 
-      <hr>
+<body>
+<div id="page">
+	<div id="top-contact">
+		<div class="contact-details">
+			<div class="icon-square"></div> <div id="email"></div>
+			<div class="icon-square"></div> <div id="phone"></div>
+		</div>
+	</div>
 
-      Shortened URL(s) So Far:
-      {% for entry in entries %}
-          <table border="1">
-            <tr>
-              <td>
-                Original
-              </td>
-              <td>
-                <a href="{{ entry.url }}">{{ entry.url }}</a>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Shortened
-              </td>
-              <td>
-                <a href="./r?t={{ entry.shortened }}">http://nchikkam-mvly.appspot.com/r?t={{ entry.shortened }}</a>
-              </td>
+    <h1 id="name" class="emphnext">Narayana Chikkam</h1>
+	<span id="talents" class="stars" style="clear:left">
+	</span>
+	<br><br>
 
-            </tr>
-          </table>
+	<h2><div class="icon-briefcase icon-square"></div> Experience</h2>
+	<div id="exps">
+	</div>
 
-      {% endfor %}
 
-    </div>
-  </body>
-</html>
-{% endautoescape %}
+	<h2>Education</h2><div id="education" class="icon-briefcase"></div>
+
+	<h2>Opensource</h2><div id="opensource" class="icon-briefcase"></div>
+
+</div><!-- End Page -->
+
+<script src="js/d3/d3.v3.min.js"></script>
+<script type="text/javascript">
+
+	d3.json("json/resume.json", function(a, b) {
+		//Header Section
+		email = d3.select('#email');
+		email.text(b.header.email);
+
+		phone = d3.select('#phone');
+		phone.text(b.header.phone);
+
+		d3.select("#talents").text(b.header.talents.join(" "));
+		var items = b.experience.items;
+
+		// Experience Section
+		exps = d3.select("#exps")
+			.selectAll("ul")
+			.data(items)
+			.enter()
+			.append("ul")
+			.append("li")
+			.each(function(d, i){
+				d3.select(this).selectAll("div")
+					.data(['title', 'duration', 'organisation'])
+					.enter()
+					.append("div")
+					.attr("id", function(id){return id;})
+					.text(function(g){return items[i][g];})
+			}
+			);
+		// Projects
+		exps.each(function(d, i){
+			d3.select(this).selectAll("ul")
+			.data(d.projects)
+			.enter()
+			.append("ul")
+			.append("li")
+			.text(function(d, i){return d;})
+		});
+		// Tools Used
+		exps.append("ul")
+			.append("li")
+			.text(function(d){return d.technologies.tools.join(" ");
+			});
+
+		//education
+		d3.select("#education")
+			.selectAll("ul")
+			.data(b.education)
+			.enter()
+			.append("ul")
+			.append("li")
+			.text(function(d, i){return b.education[i];});
+
+		// Open source contributions
+		d3.select("#opensource")
+			.selectAll("ul")
+			.data(b.opensource)
+			.enter()
+			.append("ul")
+			.append("li")
+			.text(function(d, i){
+				return b.opensource[i];
+			});
+		}
+	);
+
+</script>
+</body>
