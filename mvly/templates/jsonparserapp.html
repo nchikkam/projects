@@ -1,11 +1,30 @@
 <!DOCTYPE html>
 <html>
-<body>
+  <head>
+    <link type="text/css" rel="stylesheet" href="/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="/stylesheets/urlshortener.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="#">JSON Resume Parser App</a>
+        </div>
+      </div>
+    </div>
+    <div class="container">
 
-    <form action="jsonparser" method="post">
-        JSON Url: <input type="text" name="jsonUrl">
-        <input type="submit" value="Parse Resume">
+    <form action="/jsonparser" method="post">
+        <div><textarea name="jsonUrl" class="input-block-level" rows="1"></textarea></div>
+        <div><input type="submit" class="btn btn-large btn-primary" value="Parse JSON"></div>
     </form>
 
-</body>
+    </div>
+  </body>
 </html>
