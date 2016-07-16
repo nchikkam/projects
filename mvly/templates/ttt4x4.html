@@ -5,46 +5,18 @@
 
         <title>Tic-Tac-Toe Skeleton</title>
         <script type='text/javascript'>
+            var board = [  // actual board
+                    [0, 0, 0, 0],
+                    [0, 0, 0, 0],
+                    [0, 0, 0, 0],
+                    [0, 0, 0, 0]
+            ];
+            var DRAW =  0;
+            var COMP = 'O';   // -1
+            var USER =  'X';  //  1
+            var firstTime = 1;
+
             window.onload=function(){
-
-                var board = [  // actual board
-                        [0, 0, 0, 0],
-                        [0, 0, 0, 0],
-                        [0, 0, 0, 0],
-                        [0, 0, 0, 0]
-                ];
-                var DRAW =  0;
-                var COMP = 'O';   // -1
-                var USER =  'X';  //  1
-                var firstTime = 1;
-
-                // helpers
-
-                function reset_board(){
-                    board = [  // actual board
-                        [0, 0, 0, 0],
-                        [0, 0, 0, 0],
-                        [0, 0, 0, 0],
-                        [0, 0, 0, 0]
-                    ];
-                    firstTime = 1;
-                }
-
-                function player_wins(player){
-                    if(board[0][0]==player && board[0][1]==player && board[0][2]==player && board[0][3]==player) return 1;
-                    if(board[1][0]==player && board[1][1]==player && board[1][2]==player && board[1][3]==player) return 1;
-                    if(board[2][0]==player && board[2][1]==player && board[2][2]==player && board[2][3]==player) return 1;
-                    if(board[3][0]==player && board[3][1]==player && board[3][2]==player && board[3][3]==player) return 1;
-
-                    if(board[0][0]==player && board[1][0]==player && board[2][0]==player && board[3][0]) return 1;
-                    if(board[0][1]==player && board[1][1]==player && board[2][1]==player && board[3][1]) return 1;
-                    if(board[0][2]==player && board[1][2]==player && board[2][2]==player && board[3][2]) return 1;
-                    if(board[0][3]==player && board[1][3]==player && board[2][3]==player && board[3][3]) return 1;
-
-                    if(board[0][0]==player && board[1][1]==player && board[2][2]==player && board[3][3]==player) return 1;
-                    if(board[0][3]==player && board[1][2]==player && board[3][1]==player && board[3][0]==player) return 1;
-                    return 0;
-                }
 
                 function board_full(){
                     for(var r=0; r< 4; r++){
@@ -145,16 +117,19 @@
                 function check(){
                     if(player_wins(USER)){
                         alert("You Won !!!");
+                        document.getElementById("reset").onclick();
                         return 1;
                     }
 
                     if(player_wins(COMP)){
                         alert("Computer wins !");
+                        document.getElementById("reset").onclick();
                         return 1;
                     }
 
                     if(board_full()){
                         alert("Draw ... No One Won !");
+                        document.getElementById("reset").onclick();
                         return 1;
                     }
                     return 0;
@@ -178,7 +153,16 @@
                         }
 
                         var rc = stepper[this.id];
-                        console.log(rc);
+                        console.log("From Strategy:"+ rc);
+
+                        var winRc = verifyIfComputerWinsWithAnyOtherPositions();
+                        if(winRc !== ""){
+                            rc = winRc;
+                            console.log("Winning :"+ rc);
+                        }
+
+
+
                         document.getElementById(rc).innerHTML = COMP;
                         document.getElementById(rc).style.color='red';
 
@@ -199,14 +183,59 @@
                 }
 
                 document.getElementById("reset").onclick = function() {
-                    for(var i =0; i < 4; i++){
-                        for(var j=0; j < 4; j++){
-                            document.getElementById(i+","+j).innerHTML = '';
-                        }
-                    }
                     reset_board();
                 }
             }
+
+            function verifyIfComputerWinsWithAnyOtherPositions(){
+                for(var i =0; i < 4; i++){
+                    for(var j =0; j < 4; j++){
+                        if (board[i][j] == 0){
+                            board[i][j] = COMP;
+                            if (player_wins(COMP)){
+                                board[i][j] = 0;
+                                return i+","+j;
+                            }else{
+                                board[i][j] = 0;
+                            }
+                        }
+                    }
+                }
+                return "";  //no winning positions possible
+            }
+
+            function player_wins(player){
+                if(board[0][0]==player && board[0][1]==player && board[0][2]==player && board[0][3]==player) return 1;
+                if(board[1][0]==player && board[1][1]==player && board[1][2]==player && board[1][3]==player) return 1;
+                if(board[2][0]==player && board[2][1]==player && board[2][2]==player && board[2][3]==player) return 1;
+                if(board[3][0]==player && board[3][1]==player && board[3][2]==player && board[3][3]==player) return 1;
+
+                if(board[0][0]==player && board[1][0]==player && board[2][0]==player && board[3][0]==player) return 1;
+                if(board[0][1]==player && board[1][1]==player && board[2][1]==player && board[3][1]==player) return 1;
+                if(board[0][2]==player && board[1][2]==player && board[2][2]==player && board[3][2]==player) return 1;
+                if(board[0][3]==player && board[1][3]==player && board[2][3]==player && board[3][3]==player) return 1;
+
+                if(board[0][0]==player && board[1][1]==player && board[2][2]==player && board[3][3]==player) return 1;
+                if(board[0][3]==player && board[1][2]==player && board[3][1]==player && board[3][0]==player) return 1;
+                return 0;
+            }
+
+            function reset_board(){
+                for(var i =0; i < 4; i++){
+                    for(var j=0; j < 4; j++){
+                        document.getElementById(i+","+j).innerHTML = '';
+                    }
+                }
+
+                board = [  // actual board
+                    [0, 0, 0, 0],
+                    [0, 0, 0, 0],
+                    [0, 0, 0, 0],
+                    [0, 0, 0, 0]
+                ];
+                firstTime = 1;
+            }
+
 
             function help(){
                 alert("Tic-Tac-Toe:  Tic-tac-toe (also known as Noughts and crosses or Xs and Os) is a paper-and-pencil game for two players, X and O, who take turns marking the spaces in a 4×4 grid. The player who succeeds in placing three of their marks in a horizontal, vertical, or diagonal row wins the game.")
