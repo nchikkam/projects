@@ -91,10 +91,28 @@ class TicTacToe4x4(webapp2.RequestHandler):
         template = JINJA_ENVIRONMENT.get_template('ttt4x4.html')
         self.response.write(template.render({}))
 
-class JsonResumeParser(webapp2.RequestHandler):
+class JsonResumeParserHandle(webapp2.RequestHandler):
     def get(self):
-        template = JINJA_ENVIRONMENT.get_template('jsonparser.html')
+        template = JINJA_ENVIRONMENT.get_template('jsonparserapp.html')
         self.response.write(template.render({}))
+
+class JsonResumeParser(webapp2.RequestHandler):
+    #def get(self):
+    #    template = JINJA_ENVIRONMENT.get_template('jsonparser.html')
+    #    self.response.write(template.render({}))
+
+    def post(self):
+        import pdb
+        pdb.set_trace()
+
+        jsonUrl = self.request.get('jsonUrl')
+
+        template_values = {
+            'jsonUrl': jsonUrl
+        }
+
+        template = JINJA_ENVIRONMENT.get_template('jsonparser.html')
+        self.response.write(template.render(template_values))
 
 app = webapp2.WSGIApplication([
     ('/', MainPage),
@@ -102,5 +120,6 @@ app = webapp2.WSGIApplication([
     ('/r', Redirecter),
     ('/ttt', TicTacToe),
     ('/ttt4x4', TicTacToe4x4),
+    ('/jsonparserapp', JsonResumeParserHandle),
     ('/jsonparser', JsonResumeParser),
-], debug=False)
+], debug=True)
