@@ -97,7 +97,6 @@
 
                 var turn = USER; //'X';
                 function next() {
-                    //turn = turn === 'X' ? 'O' : 'X';
                     turn = turn === COMP ? USER : COMP;
                 }
 
@@ -142,10 +141,18 @@
                     return [best_row, best_col];
                 }
 
+                function getChar(turn){
+                    if (turn == USER)
+                        return 'X';
+                    return 'O';
+                }
+
                 function play() {
                     if (this.innerHTML === '') {
-                        this.innerHTML = turn;
-
+                        this.innerHTML = getChar(turn);
+                        if(turn==USER){
+                            this.style.color='blue';
+                        }
 
                         this.r = this.id.split(",")[0];
                         this.c = this.id.split(",")[1];
@@ -162,68 +169,81 @@
                             document.getElementById("reset").onclick();
                             return;
                         }else if ( player_wins(COMP)){
-                            document.getElementById(id).innerHTML = COMP;
+                            document.getElementById(id).innerHTML = getChar(COMP);
+                            document.getElementById(id).style.color='red';
                             alert("Computer Wins !!!");
                             document.getElementById("reset").onclick();
                             return;
                         }
-
-                        document.getElementById(id).innerHTML = COMP;
-
-                        /*if (player_wins(USER)){
-                            alert("You Win :) !!!");
-                            document.getElementById("reset").onclick();
-                        }*/
+                        document.getElementById(id).innerHTML = getChar(COMP);
+                        document.getElementById(id).style.color='red';
                     }
                 }
 
-                var cells = document.getElementById("board").getElementsByTagName("td");
-                for (var i in cells) {
-                   cells[i].onclick = play;
+                for(var i =0; i < 3; i++){
+                    for(var j=0; j < 3; j++){
+                        document.getElementById(i+","+j).onclick = play;
+                    }
                 }
+
                 document.getElementById("reset").onclick = function() {
-                    for (var i in cells) {
-                       cells[i].innerHTML = '';
-                       reset_board();
+                    for(var i =0; i < 3; i++){
+                        for(var j=0; j < 3; j++){
+                            document.getElementById(i+","+j).innerHTML = '';
+                        }
                     }
+                    reset_board();
                 }
             }
 
-
+            function help(){
+                alert("Tic-Tac-Toe:  Tic-tac-toe (also known as Noughts and crosses or Xs and Os) is a paper-and-pencil game for two players, X and O, who take turns marking the spaces in a 3×3 grid. The player who succeeds in placing three of their marks in a horizontal, vertical, or diagonal row wins the game.")
+            }
         </script>
-
     </head>
 
-    <body>
-    <br><br><br><br><br><br><br><br><br>
-    <div style="width: 60%; margin: 0px auto;">
-    <table id="board" border="1" cellpadding="5" align="center">
-        <tbody>
-            <tr>
-                <td id="0,0"></td>
-                <td id="0,1"></td>
-                <td id="0,2"></td>
-            </tr>
-            <tr>
-                <td id="1,0"></td>
-                <td id="1,1"></td>
-                <td id="1,2"></td>
-            </tr>
-            <tr>
-                <td id="2,0"></td>
-                <td id="2,1"></td>
-                <td id="2,2"></td>
-            </tr>
-        </tbody>
-    </table><br>
-    <button id="reset">Restart</button>
-        <pre>
--1: Computer Move
-1: User/You
-
-            </pre>
+    <body bgcolor="#E6E6FA">
+        <div align="center">
+            <table cellpadding="0" cellspacing="0" border="0" width="600">
+            <tbody>
+                <tr>
+                    <td valign="top" align="center" class="tBorder" style="padding:30px;padding-top:20px">
+                        <h1 class="hh1"><b>Tic-Tac-Toe</b></h1>
+                        <br><br>
+                        <div align="left">Tic-tac-toe (also known as Noughts and crosses or Xs and Os) is a paper-and-pencil game for two players, X and O, who take turns marking the spaces in a 3×3 grid. The player who succeeds in placing three of their marks in a horizontal, vertical, or diagonal row wins the game.</div>
+                        <br>
+                            <table border="0">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="sqr3x3" style="width:400px; margin:0 auto;">
+                                                <div id="0,0"></div>
+                                                <div id="0,1"></div>
+                                                <div id="0,2"></div>
+                                                <div id="1,0"></div>
+                                                <div id="1,1"></div>
+                                                <div id="1,2"></div>
+                                                <div id="2,0"></div>
+                                                <div id="2,1"></div>
+                                                <div id="2,2"></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <button id="reset">Restart</button>
+                            <input type=button value="Help" onClick="help();">
+                            <pre>
+O: Computer Move
+X: User/You
+                            </pre>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
         </div>
-    <br><br><br><br><br><br><br><br><br>
 
+    </div>
+    <br><br><br><br><br><br><br><br><br>
     </body>
 </html>

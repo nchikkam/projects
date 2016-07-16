@@ -15,11 +15,24 @@ body {
     width: 800px;
 }
 
-.sqr{width:400px; height:400px}
-.sqr div{
+.sqr4x4 {width:400px; height:400px}
+.sqr4x4 div{
     float:left;
     width:23%;
     height:23%;
+    border:1px solid white;
+    box-sizing:border-box;
+    background-color:rgba(158, 158, 158, 0.45);
+    text-align: center;
+    font-size: 60px;
+    font-family:'Comic Sans MS', Helvetica, sans-serif;
+}
+
+.sqr3x3 {width:400px; height:400px}
+.sqr3x3 div{
+    float:left;
+    width:33%;
+    height:33%;
     border:1px solid white;
     box-sizing:border-box;
     background-color:rgba(158, 158, 158, 0.45);
