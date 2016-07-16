@@ -13,6 +13,11 @@
 		phone = d3.select('#phone');
 		phone.text(b.header.phone);
 
+		d3.select("#name").text(b.header.firstname);
+		d3.select("#educationHeading").text("Education");
+		d3.select("#openSourceHeading").text("OpenSource");
+		d3.select("#experienceHeading").text("Experience");
+
 		d3.select("#talents").text(b.header.talents.join(" "));
 		var items = b.experience.items;
 
@@ -81,19 +86,21 @@
 		</div>
 	</div>
 
-    <h1 id="name" class="emphnext">Narayana Chikkam</h1>
-	<span id="talents" class="stars" style="clear:left">
-	</span>
+	<div id = "name" class="emphnext"></div><br><br>
+
+	<span id="talents" class="stars" style="clear:left"></span>
 	<br><br>
 
-	<h2><div class="icon-briefcase icon-square"></div> Experience</h2>
-	<div id="exps">
-	</div>
+	<div id="experienceHeading" class="icon-briefcase icon-square emphh2"></div><br><br>
+	<div id="exps"></div><br>
 
 
-	<h2>Education</h2><div id="education" class="icon-briefcase"></div>
+	<div id = "educationHeading" class="emphh2"></div><br>
+	<!--<h2>Education</h2>-->
+	<div id="education" class="icon-briefcase"></div><br>
 
-	<h2>Opensource</h2><div id="opensource" class="icon-briefcase"></div>
+	<div id = "openSourceHeading" class="emphh2"></div><br>
+	<div id="opensource" class="icon-briefcase"></div>
 
 </div>
 </body>
