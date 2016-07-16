@@ -97,14 +97,7 @@ class JsonResumeParserHandle(webapp2.RequestHandler):
         self.response.write(template.render({}))
 
 class JsonResumeParser(webapp2.RequestHandler):
-    #def get(self):
-    #    template = JINJA_ENVIRONMENT.get_template('jsonparser.html')
-    #    self.response.write(template.render({}))
-
     def post(self):
-        import pdb
-        pdb.set_trace()
-
         jsonUrl = self.request.get('jsonUrl')
 
         template_values = {
