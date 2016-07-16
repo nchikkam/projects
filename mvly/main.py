@@ -115,4 +115,4 @@ app = webapp2.WSGIApplication([
     ('/ttt4x4', TicTacToe4x4),
     ('/jsonparserapp', JsonResumeParserHandle),
     ('/jsonparser', JsonResumeParser),
-], debug=True)
+], debug=False)

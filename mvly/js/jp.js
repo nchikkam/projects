@@ -1,7 +1,5 @@
 
 function render(jsonUrl){
-    //d3.json("json/resume.json", function(a, b) {
-    console.log(jsonUrl);
 
     d3.json(jsonUrl, function(a, b) {
 
