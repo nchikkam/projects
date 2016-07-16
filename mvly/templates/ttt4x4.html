@@ -153,15 +153,11 @@
                         }
 
                         var rc = stepper[this.id];
-                        console.log("From Strategy:"+ rc);
 
                         var winRc = verifyIfComputerWinsWithAnyOtherPositions();
                         if(winRc !== ""){
                             rc = winRc;
-                            console.log("Winning :"+ rc);
                         }
-
-
 
                         document.getElementById(rc).innerHTML = COMP;
                         document.getElementById(rc).style.color='red';
@@ -216,9 +212,15 @@
                 if(board[0][3]==player && board[1][3]==player && board[2][3]==player && board[3][3]==player) return 1;
 
                 if(board[0][0]==player && board[1][1]==player && board[2][2]==player && board[3][3]==player) return 1;
-                if(board[0][3]==player && board[1][2]==player && board[3][1]==player && board[3][0]==player) return 1;
+                if(board[0][3]==player && board[1][2]==player && board[2][1]==player && board[3][0]==player) return 1;
                 return 0;
             }
+
+            /*
+                b = [["X","O","X","O"],[0,"O","O","X"],["O","X","X","X"],[0,"O","O","X"]]
+                assert true player_wins("O") == 0
+
+            */
 
             function reset_board(){
                 for(var i =0; i < 4; i++){
