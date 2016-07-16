@@ -1,7 +1,7 @@
 #board td {
-    width: 18px;
-    height: 18px;
-    text-align: center;
+width: 18px;
+height: 18px;
+text-align: center;
 }
 body {
     margin: 0;
@@ -13,4 +13,17 @@ body {
     margin: 0 auto;
     text-align: left;
     width: 800px;
+}
+
+.sqr{width:400px; height:400px}
+.sqr div{
+    float:left;
+    width:23%;
+    height:23%;
+    border:1px solid white;
+    box-sizing:border-box;
+    background-color:rgba(158, 158, 158, 0.45);
+    text-align: center;
+    font-size: 60px;
+    font-family:'Comic Sans MS', Helvetica, sans-serif;
 }
