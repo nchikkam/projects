@@ -204,9 +204,10 @@ class JsonParser(webapp2.RequestHandler):
 
         jsonUrl = self.request.get('jsonUrl')
         parsertype = self.request.get('parsertype')
-        jsonData = self.jsondata(jsonUrl)
+
 
         try:
+            jsonData = self.jsondata(jsonUrl)
             if parsertype == "PureJson":
                 cleanData = jsonData.__str__().replace("u\"","\"").replace("u\'","\'")
                 template_values = {
@@ -249,7 +250,7 @@ class JsonParser(webapp2.RequestHandler):
         except:
             template_values = {'error': "Invalid Json URL"}
             template = JINJA_ENVIRONMENT.get_template('jsonparserapperror.html')
-            self.response.write(template.render())
+            self.response.write(template.render(template_values))
 
 
 """
