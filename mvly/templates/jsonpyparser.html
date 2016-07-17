@@ -1,0 +1,60 @@
+<html>
+    <head>
+		<link rel="stylesheet" type="text/css" href="/stylesheets/screen.css">
+	</head>
+	<body>
+		<div id="page" class="unselectable">
+                <div id="top-contact">
+                    <div class="contact-details">
+                        <div class="icon-square"></div> <div id="email">nchikkam@gmail.com</div>
+                        <div class="icon-square"></div> <div id="phone">+91-999-999-999</div>
+                    </div>
+                </div>
+
+                <div id="name" class="emphnext">{{ resume.header.firstname }}</div><br><br>
+
+                <span id="talents" class="stars" style="clear:left">{{ talents }}</span>
+                <br><br>
+
+                <div id="experienceHeading" class="icon-briefcase icon-square emphh2">Experience</div><br><br>
+                <div id="exps">
+                {% for exp in exps %}
+                    <ul>
+                        <li>
+                            <div id="title">{{exp.title}}</div>
+                            <div id="duration">{{exp.duration}}</div>
+                            <div id="organisation">{{exp.organisation}}</div>
+                            {% for project in exp.projects %}
+                            <ul>
+                                <li>{{project}}</li>
+                            </ul>
+                            {% endfor %}
+                        </li>
+                    </ul>
+                {% endfor %}
+
+                <br>
+
+
+                <div id="educationHeading" class="emphh2">Education</div><br>
+                <div id="education" class="icon-briefcase">
+                    {% for degree in resume.education %}
+                    <ul>
+                        <li>{{degree}}</li>
+                    </ul>
+                    {% endfor %}
+                </div>
+                <br>
+                <div id="openSourceHeading" class="emphh2">OpenSource</div>
+                <br>
+                <div id="opensource" class="icon-briefcase">
+                    {% for contribution in opensources %}
+                    <ul>
+                        <li>{{contribution}}</li>
+                    </ul>
+                    {% endfor %}
+                </div>
+		    </div>
+        </div>
+    </body>
+</html>
