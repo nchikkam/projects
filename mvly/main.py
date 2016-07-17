@@ -16,7 +16,6 @@ from lib.base62 import (
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__) + "/templates"),
-    #loader=jinja2.FileSystemLoader(os.path.dirname(__file__) ),
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 
@@ -122,7 +121,7 @@ class JsonParser(webapp2.RequestHandler):
             template = JINJA_ENVIRONMENT.get_template('jsonpyparser.html')
             self.response.write(template.render(template_values))
 
-        if parsertype == "Python(Fancy)":
+        if parsertype == "Python(Theme-Paper)":
 
             template_values = {
                 'resume': jsonData,

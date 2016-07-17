@@ -139,7 +139,9 @@
                 "organisation": "Amazon.com, Chennai, India",
                 "duration": "Dec. 2005 - Jan. 2007",
                 "projects": [
-                    "Todo"
+                    "Did the re-architecture and design of equal Distribution of domains project and successfully resolved the competitors blocking issues.",
+                    "Designed a scalable system to support and report the ASIN health and auditing records which resolved the time taking and out of memory scalability issues.",
+                    "Suggested a business tool that helps the QA teams in identifying the critical issues with the product mismatches. This helped the whole team later on to track any issue in the competitive monitoring tools project."
                 ],
                 "technologies": {
                     "tools": [

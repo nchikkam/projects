@@ -3,7 +3,7 @@
         <link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="/stylesheets/screen.css">
 	</head>
-	<body>
+	<body style="color: rgb(0,0,255)">
 		<div id="page" class="unselectable">
                 <div id="top-contact">
                     <div class="contact-details">
@@ -22,7 +22,7 @@
                 {% for exp in exps %}
                     <ul>
                         <li>
-                            <div id="title"><b>{{exp.title}}</b>, {{exp.duration}}, {{exp.organisation}}</div>
+                            <div id="title"><b>{{exp.title}}</b>, {{exp.duration}}, {{exp.organisation}}</div><br>
                             {% for project in exp.projects %}
                             <ul>
                                 <li>{{project}}</li>
@@ -30,6 +30,7 @@
                             {% endfor %}
                         </li>
                     </ul>
+                    <br>
                 {% endfor %}
 
                 <br>
@@ -44,7 +45,7 @@
                     {% endfor %}
                 </div>
                 <br>
-                <div id="openSourceHeading" class="emphh2">OpenSource</div>
+                <div id="openSourceHeading" class="emphh2">OpenSource Links</div>
                 <br>
                 <div id="opensource" class="icon-briefcase">
                     {% for contribution in opensources %}
