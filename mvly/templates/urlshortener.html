@@ -5,6 +5,18 @@
     <link type="text/css" rel="stylesheet" href="/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="/stylesheets/urlshortener.css" rel="stylesheet">
+      <script>
+        function validateForm() {
+            var x = document.forms["urlshortener"]["url"].value;
+            var expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+            var regex = new RegExp(expression);
+            if (!x.match(regex) ) {
+              alert("Please Enter A Valid, the one entered doesn't match a standard URL Pattern");
+              return false;
+            }
+        }
+    </script>
+
   </head>
   <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -33,7 +45,7 @@
         </div>
         <br><br><br><br>
 
-      <form action="urlshortener" method="post">
+      <form name="urlshortener" action="urlshortener" method="post"  onsubmit="return validateForm()">
         <div><textarea name="url" class="input-block-level" rows="1"></textarea></div>
         <div><input type="submit" class="btn btn-large btn-primary" value="shorten"></div>
       </form>

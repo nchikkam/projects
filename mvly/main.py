@@ -203,37 +203,56 @@ class JsonParser(webapp2.RequestHandler):
         jsonUrl = self.request.get('jsonUrl')
         parsertype = self.request.get('parsertype')
 
-        jsonData = self.jsondata(jsonUrl)
-        if parsertype == "Python":
+        try:
+            jsonData = self.jsondata(jsonUrl)
+            if parsertype == "Python":
 
-            template_values = {
-                'resume': jsonData,
-                'exps':   jsonData['experience']['items'],
-                'opensources': ["%s, %s"%(a,b) for a,b in jsonData['opensource']],
-                'talents': "  ".join(jsonData['header']['talents'])
-            }
+                template_values = {
+                    'resume': jsonData,
+                    'exps':   jsonData['experience']['items'],
+                    'opensources': ["%s, %s"%(a,b) for a,b in jsonData['opensource']],
+                    'talents': "  ".join(jsonData['header']['talents'])
+                }
 
-            template = JINJA_ENVIRONMENT.get_template('jsonpyparser.html')
-            self.response.write(template.render(template_values))
+                template = JINJA_ENVIRONMENT.get_template('jsonpyparser.html')
+                self.response.write(template.render(template_values))
 
-        if parsertype == "Python(Theme-Paper)":
+            if parsertype == "Python(Theme-Paper)":
 
-            template_values = {
-                'resume': jsonData,
-                'exps': jsonData['experience']['items'],
-                'opensources': [[a, b] for a, b in jsonData['opensource']],
-                'talents': "  ".join(jsonData['header']['talents'])
-            }
+                template_values = {
+                    'resume': jsonData,
+                    'exps': jsonData['experience']['items'],
+                    'opensources': [[a, b] for a, b in jsonData['opensource']],
+                    'talents': "  ".join(jsonData['header']['talents'])
+                }
 
-            template = JINJA_ENVIRONMENT.get_template('jsonpyfparser.html')
-            self.response.write(template.render(template_values))
+                template = JINJA_ENVIRONMENT.get_template('jsonpyfparser.html')
+                self.response.write(template.render(template_values))
 
 
-        elif parsertype == "javascript(d3)":
-            template_values = { 'jsonUrl': jsonUrl }
+            elif parsertype == "javascript(d3)":
+                template_values = { 'jsonUrl': jsonUrl }
 
-            template = JINJA_ENVIRONMENT.get_template('jsonparser.html')
-            self.response.write(template.render(template_values))
+                template = JINJA_ENVIRONMENT.get_template('jsonparser.html')
+                self.response.write(template.render(template_values))
+        except:
+            template_values = {'error': "Invalid Json URL"}
+            template = JINJA_ENVIRONMENT.get_template('jsonparserapperror.html')
+            self.response.write(template.render())
+
+
+"""
+    Common page to cast all errors in Apps
+"""
+class ErrorHandler(webapp2.RequestHandler):
+    def get(self):
+        """
+            Renders Error Page
+        :return: None
+        """
+
+        template = JINJA_ENVIRONMENT.get_template('jsonparserapperror.html')
+        self.response.write(template.render({}))
 
 app = webapp2.WSGIApplication([
     ('/', MainPage),
@@ -242,5 +261,6 @@ app = webapp2.WSGIApplication([
     ('/ttt', TicTacToe),
     ('/ttt4x4', TicTacToe4x4),
     ('/jsonparserapp', JsonParserApp),
-    ('/jsonparser', JsonParser)
-], debug=False)
+    ('/jsonparser', JsonParser),
+    ('/error', ErrorHandler)
+], debug=True)

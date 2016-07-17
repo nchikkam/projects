@@ -4,6 +4,16 @@
     <link type="text/css" rel="stylesheet" href="/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="/stylesheets/urlshortener.css" rel="stylesheet">
+    <script>
+        function validateForm() {
+            var x = document.forms["parserapp"]["jsonUrl"].value;
+            if (x == null || x == "") {
+                alert("JSON Url cannot be null or empty, please enter a genuine URL");
+                return false;
+            }
+        }
+    </script>
+
   </head>
   <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -28,7 +38,7 @@
             </div>
         <br><br><br><br>
 
-        <form action="/jsonparser" method="post">
+        <form name="parserapp" action="/jsonparser" method="post" onsubmit="return validateForm()">
             <b>Choose Kind Of Parser:</b>
             <select name="parsertype">
                 <option value="javascript(d3)">JavaScript (d3)</option>

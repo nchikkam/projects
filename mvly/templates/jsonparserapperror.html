@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link type="text/css" rel="stylesheet" href="/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="/stylesheets/urlshortener.css" rel="stylesheet">
+
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="#">Information Page . . .</a>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+
+        <br><br><br><br>
+        <h5>Issues with the given URL</h5>
+        {{ error }}
+
+        <br><br><br><br>
+        <div class="brand" >
+        JSON Url has to be a genuine one and the one entered doesn't seem a working URL. Probably it was broken or
+        not available anymore. Please try with a proper one and we would like to parse it with passion :)
+        </div>
+        <br><br><br><br>
+    </div>
+
+  </body>
+</html>
