@@ -195,32 +195,6 @@ class JsonParser(webapp2.RequestHandler):
         data = json.load(res)
         return data
 
-    def parseJSON(self, obj):
-        newobj = {}
-
-        for key, value in obj.iteritems():
-            key = str(key)
-
-            if isinstance(value, dict):
-                newobj[key] = self.parseJSON(value)
-            elif isinstance(value, list):
-                if key not in newobj:
-                    newobj[key] = []
-                    for i in value:
-                        newobj[key].append(self.parseJSON(i))
-            elif isinstance(value, unicode):
-                val = str(value)
-                if val.isdigit():
-                    val = int(val)
-                else:
-                    try:
-                        val = float(val)
-                    except ValueError:
-                        val = str(val)
-                newobj[key] = val
-
-        return newobj
-
     def post(self):
         """
             This method holds the logic to process the given .json url
