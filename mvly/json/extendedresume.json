@@ -1,8 +1,8 @@
 {
     "configurations": {
-        "pdf" : false,
-        "html": true,
-        "tex":  false
+        "pdf" : "false",
+        "html": "true",
+        "tex":  "false"
     },
 
     "header" : {

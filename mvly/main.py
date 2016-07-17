@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
+
 import os
-import urllib
 import urllib2
 import json
 
@@ -17,7 +17,7 @@ from lib.base62 import (
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__) + "/templates"),
     extensions=['jinja2.ext.autoescape'],
-    autoescape=True)
+    autoescape=False)
 
 URL_SHORTNER_NAME = 'url_shortener'     # key to thendb data store
 baseUtil = Base62Util()                 # a utility class for encoding
@@ -178,6 +178,7 @@ class JsonParserApp(webapp2.RequestHandler):
         template = JINJA_ENVIRONMENT.get_template('jsonparserapp.html')
         self.response.write(template.render({}))
 
+
 """
     This class Handles the actual processing of the user submitted .json
     url into a .html page using the selected choice.
@@ -194,18 +195,54 @@ class JsonParser(webapp2.RequestHandler):
         data = json.load(res)
         return data
 
+    def parseJSON(self, obj):
+        newobj = {}
+
+        for key, value in obj.iteritems():
+            key = str(key)
+
+            if isinstance(value, dict):
+                newobj[key] = self.parseJSON(value)
+            elif isinstance(value, list):
+                if key not in newobj:
+                    newobj[key] = []
+                    for i in value:
+                        newobj[key].append(self.parseJSON(i))
+            elif isinstance(value, unicode):
+                val = str(value)
+                if val.isdigit():
+                    val = int(val)
+                else:
+                    try:
+                        val = float(val)
+                    except ValueError:
+                        val = str(val)
+                newobj[key] = val
+
+        return newobj
+
     def post(self):
         """
             This method holds the logic to process the given .json url
             using the method chosen by the user.
         :return: None
         """
+
         jsonUrl = self.request.get('jsonUrl')
         parsertype = self.request.get('parsertype')
+        jsonData = self.jsondata(jsonUrl)
 
         try:
-            jsonData = self.jsondata(jsonUrl)
-            if parsertype == "Python":
+            if parsertype == "PureJson":
+                cleanData = jsonData.__str__().replace("u\"","\"").replace("u\'","\'")
+                template_values = {
+                    'json': cleanData
+                }
+
+                template = JINJA_ENVIRONMENT.get_template('purejson.html')
+                self.response.write(template.render(template_values))
+
+            elif parsertype == "Python":
 
                 template_values = {
                     'resume': jsonData,
@@ -217,7 +254,7 @@ class JsonParser(webapp2.RequestHandler):
                 template = JINJA_ENVIRONMENT.get_template('jsonpyparser.html')
                 self.response.write(template.render(template_values))
 
-            if parsertype == "Python(Theme-Paper)":
+            elif parsertype == "Python(Theme-Paper)":
 
                 template_values = {
                     'resume': jsonData,
@@ -250,7 +287,6 @@ class ErrorHandler(webapp2.RequestHandler):
             Renders Error Page
         :return: None
         """
-
         template = JINJA_ENVIRONMENT.get_template('jsonparserapperror.html')
         self.response.write(template.render({}))
 
@@ -263,4 +299,4 @@ app = webapp2.WSGIApplication([
     ('/jsonparserapp', JsonParserApp),
     ('/jsonparser', JsonParser),
     ('/error', ErrorHandler)
-], debug=True)
+], debug=False)
