@@ -20,17 +20,32 @@
     </div>
     <div class="container">
 
-    <form action="/jsonparser" method="post">
-        <b>Choose Kind Of Parser:<b>
-        <select name="parsertype">
-            <option value="javascript(d3)">JavaScript (d3)</option>
-            <option value="Python">Python</option>
-        </select>
-        <br>
-        <div><textarea name="jsonUrl" class="input-block-level" rows="1"></textarea></div>
-        <div><input type="submit" class="btn btn-large btn-primary" value="Parse JSON"></div>
-    </form>
+        <br><br><br><br>
+        <div class="brand" >
+        A simple tool to parse a given .json url resume into a presentation format such as .html. This tool offers
+        two types of parsing techniques. One with d3 javascript visualization library and other with python standard
+        json parsing.
+            </div>
+        <br><br><br><br>
 
+        <form action="/jsonparser" method="post">
+            <b>Choose Kind Of Parser:</b>
+            <select name="parsertype">
+                <option value="javascript(d3)">JavaScript (d3)</option>
+                <option value="Python">Python</option>
+            </select>
+            <br>
+            <div><textarea name="jsonUrl" class="input-block-level" rows="1"></textarea></div>
+            <div><input type="submit" class="btn btn-large btn-primary" value="Parse JSON"></div>
+        </form>
+
+        <hr>
+        <div>
+              <b>Paste the below URL to see the parsed Resume.</b><br>
+            <a href="https://raw.githubusercontent.com/nchikkam/projects/master/mvly/json/resume.json">
+            https://raw.githubusercontent.com/nchikkam/projects/master/mvly/json/resume.json</a>
+        </div>
     </div>
+
   </body>
 </html>

@@ -21,6 +21,18 @@
     </div>
     <div class="container">
 
+      <br><br><br><br>
+        <div class="brand" >
+        URL shortener is a simple web application to tinify the given long URL into a short form so as to make its usage
+        convenient to the regular users. This app uses a custom database to keep the original URL and creates a short
+        form of its version.
+
+        More Information: Internally the app uses base62 encoding format to shorten the URL(s). The symbol set which is
+        called Sigma in Mathemetical system includes characters: [0-9, A-Z and a-z]. This set of all these symbols makes
+        its size 62, which is nothing but the base 62 symbols set.
+        </div>
+        <br><br><br><br>
+
       <form action="/shorten" method="post">
         <div><textarea name="url" class="input-block-level" rows="1"></textarea></div>
         <div><input type="submit" class="btn btn-large btn-primary" value="shorten"></div>
