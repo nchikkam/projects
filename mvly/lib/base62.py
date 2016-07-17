@@ -17,6 +17,7 @@ class Base62Util:
 
     def toBase(self, num):
         """
+            This method converts the given decimal number into base 62 radix.
         :param string: a number
         :return:       its base 62 representation
         """
@@ -30,6 +31,11 @@ class Base62Util:
         return res
 
     def toDec(self, num):
+        """
+            This method converts given base62 number to decimal radix system.
+        :param num: a bas62 number
+        :return: the decimal form of given number
+        """
         res = 0
         for i in range(len(num)):
             res = self.base * res + self.symbols.find(num[i])

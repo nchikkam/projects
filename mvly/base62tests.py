@@ -3,6 +3,9 @@ from lib.base62 import (
     Base62Util
 )
 
+"""
+    Functional tests for validation of the util Base62Util class
+"""
 class Base62UtilTest(unittest.TestCase):
 
     def testBase62ToDecmialBasic(self):
