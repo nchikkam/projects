@@ -2,6 +2,8 @@
 
 import os
 import urllib
+import urllib2
+import json
 
 from google.appengine.ext import ndb
 
@@ -91,21 +93,40 @@ class TicTacToe4x4(webapp2.RequestHandler):
         template = JINJA_ENVIRONMENT.get_template('ttt4x4.html')
         self.response.write(template.render({}))
 
-class JsonResumeParserHandle(webapp2.RequestHandler):
+class JsonParserApp(webapp2.RequestHandler):
     def get(self):
         template = JINJA_ENVIRONMENT.get_template('jsonparserapp.html')
         self.response.write(template.render({}))
 
-class JsonResumeParser(webapp2.RequestHandler):
+class JsonParser(webapp2.RequestHandler):
+
+    def jsondata(self, jsonUrl):
+        res = urllib2.urlopen(jsonUrl)
+        data = json.load(res)
+        return data
+
     def post(self):
         jsonUrl = self.request.get('jsonUrl')
+        parsertype = self.request.get('parsertype')
 
-        template_values = {
-            'jsonUrl': jsonUrl
-        }
+        jsonData = self.jsondata(jsonUrl)
+        if parsertype == "Python":
 
-        template = JINJA_ENVIRONMENT.get_template('jsonparser.html')
-        self.response.write(template.render(template_values))
+            template_values = {
+                'resume': jsonData,
+                'exps':   jsonData['experience']['items'],
+                'opensources': ["%s, %s"%(a,b) for a,b in jsonData['opensource']],
+                'talents': "  ".join(jsonData['header']['talents'])
+            }
+
+            template = JINJA_ENVIRONMENT.get_template('jsonpyparser.html')
+            self.response.write(template.render(template_values))
+
+        elif parsertype == "javascript(d3)":
+            template_values = { 'jsonUrl': jsonUrl }
+
+            template = JINJA_ENVIRONMENT.get_template('jsonparser.html')
+            self.response.write(template.render(template_values))
 
 app = webapp2.WSGIApplication([
     ('/', MainPage),
@@ -113,6 +134,6 @@ app = webapp2.WSGIApplication([
     ('/r', Redirecter),
     ('/ttt', TicTacToe),
     ('/ttt4x4', TicTacToe4x4),
-    ('/jsonparserapp', JsonResumeParserHandle),
-    ('/jsonparser', JsonResumeParser),
+    ('/jsonparserapp', JsonParserApp),
+    ('/jsonparser', JsonParser)
 ], debug=False)

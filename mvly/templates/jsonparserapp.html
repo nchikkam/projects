@@ -21,6 +21,12 @@
     <div class="container">
 
     <form action="/jsonparser" method="post">
+        <b>Choose Kind Of Parser:<b>
+        <select name="parsertype">
+            <option value="javascript(d3)">JavaScript (d3)</option>
+            <option value="Python">Python</option>
+        </select>
+        <br>
         <div><textarea name="jsonUrl" class="input-block-level" rows="1"></textarea></div>
         <div><input type="submit" class="btn btn-large btn-primary" value="Parse JSON"></div>
     </form>
