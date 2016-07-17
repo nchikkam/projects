@@ -18,8 +18,8 @@
     ],
 
     "opensource":[
-        ["algorithms", "http://algoprdgms.appspot.com/"],
-        ["git",        "github.com/nchikkam"],
+        ["algorithms", "https://algoprdgms.appspot.com/"],
+        ["git",        "https://github.com/nchikkam"],
         ["nodejs",     "https://www.npmjs.com/~nchikkam"],
         ["python",     "https://code.activestate.com/recipes/users/4174427/"]
     ],

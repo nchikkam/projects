@@ -1,5 +1,6 @@
 <html>
     <head>
+        <link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="/stylesheets/screen.css">
 	</head>
 	<body>
@@ -50,7 +51,7 @@
                 <div id="opensource" class="icon-briefcase">
                     {% for contribution in opensources %}
                     <ul>
-                        <li>{{contribution}}</li>
+                        <li><a href="{{contribution.1}}">{{contribution.0}}</a></li>
                     </ul>
                     {% endfor %}
                 </div>

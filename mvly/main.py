@@ -122,6 +122,19 @@ class JsonParser(webapp2.RequestHandler):
             template = JINJA_ENVIRONMENT.get_template('jsonpyparser.html')
             self.response.write(template.render(template_values))
 
+        if parsertype == "Python(Fancy)":
+
+            template_values = {
+                'resume': jsonData,
+                'exps': jsonData['experience']['items'],
+                'opensources': [[a, b] for a, b in jsonData['opensource']],
+                'talents': "  ".join(jsonData['header']['talents'])
+            }
+
+            template = JINJA_ENVIRONMENT.get_template('jsonpyfparser.html')
+            self.response.write(template.render(template_values))
+
+
         elif parsertype == "javascript(d3)":
             template_values = { 'jsonUrl': jsonUrl }
 
