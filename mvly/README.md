@@ -24,4 +24,3 @@ page.
 [4]: https://developers.google.com/appengine/docs/python/users/
 [5]: http://webapp-improved.appspot.com/
 [6]: http://jinja.pocoo.org/docs/
-[7]: http://twitter.github.com/bootstrap/
