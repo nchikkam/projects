@@ -1,0 +1,3 @@
+#userID|userName|openingBalance|
+10000|Scott Mayer|1000.00|
+10001|Dennis Ritchie|2000.00|
