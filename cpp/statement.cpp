@@ -470,3 +470,30 @@ public:
     }
 };
 
+// Main drive method that invokes the application and generates the report
+// with the help of classes.
+int main (int argc, char *argv[]){
+    Account *ca;
+
+    if(argc == 4){  // all params mentioned
+        int userId = atoi(argv[1]);
+        int month = atoi(argv[2]);
+        string file = argv[3];
+
+        ca = new CurrentAccount(userId);
+        ca->setReportFileName(file);
+        ca->generateStatement(month);
+
+    }else if (argc == 3){  // report missed
+        int userId = atoi(argv[1]);
+        int month = atoi(argv[2]);
+
+        ca = new CurrentAccount(userId);
+        ca->generateStatement(month);
+
+    }else {  // usage
+        cout<<"usage: "<< argv[0] <<" <userId> <month[0-12]> <report_file_name>\n";
+        exit(0);
+    }
+    return 0;
+}
