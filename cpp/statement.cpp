@@ -286,8 +286,8 @@ public:
 };
 
 // Global Assumptions:
-string txFile("C:/nary/cpp/src/transactions.txt");  // transaction for all users
-string mstFile("C:/nary/cpp/src/master.txt");       // userID to userName association master file
+string txFile("./transactions.txt");  // transaction for all users
+string mstFile("./master.txt");       // userID to userName association master file
 Generator dataSource(txFile, mstFile);           // global object to expose the userData and transactions
                                                  // for monthly statement generation.
 
