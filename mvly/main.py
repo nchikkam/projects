@@ -46,4 +46,4 @@ app = webapp2.WSGIApplication([
     ('/jsonparserapp', JsonParserApp),
     ('/jsonparser', JsonParser),
     ('/error', ErrorHandler)
-], debug=False)
+], debug=True)
