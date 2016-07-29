@@ -95,11 +95,11 @@ public:
 
     // Handy Ctor that could be used when all fields are avalable
     Record(long userId, string userName, string description, double amount, Date date){
-        this->userID = userId;
-        this->userName = userName;
-        this->description = description;
-        this->amount = amount;
-        this->date = date;
+        this->userID        = userId;
+        this->userName      = userName;
+        this->description   = description;
+        this->amount        = amount;
+        this->date          = date;
     }
 
     Date getDate(){
