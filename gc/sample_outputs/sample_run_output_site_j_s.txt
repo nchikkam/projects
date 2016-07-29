@@ -1,0 +1,57 @@
+C:\nary\gc>C:\Python27\python.exe main.py --rooturl http://joel.spolsky.com --sitemapxml sitemap_js.xml --sitemapjson sitemap_js.json --robotrules False
+INFO:root:--rooturl: http://joel.spolsky.com
+INFO:root:--sitemapxml: sitemap_js.xml
+INFO:root:--sitemapjson: sitemap_js.json
+INFO:root:--robotrules: False
+False
+INFO:root:Starting to Crawl Page: http://joel.spolsky.com
+DEBUG:root:Queued Pages: 0, Crawled Pages: 1
+http://www.fogcreek.com
+http://www.JoelOnSoftware.com
+http://www.JoelOnSoftware.com
+biketrip/index.htm
+gallery/index.htm
+beach/index.htm
+http://www.fogcreek.com
+zoop/index.htm
+INFO:root:Starting to Crawl Page: http://joel.spolsky.com/gallery/index.htm
+DEBUG:root:Queued Pages: 3, Crawled Pages: 2
+WITHJARED.htm
+ARMY.htm
+PRAGUE.htm
+BIKE.htm
+FAMILY.htm
+../index.htm
+nn.htm
+../snow/index.htm
+cpss/index.html
+INFO:root:Starting to Crawl Page: http://joel.spolsky.com/FAMILY.htm
+DEBUG:root:Issue with the url: http://joel.spolsky.com/FAMILY.htm
+INFO:root:Starting to Crawl Page: http://joel.spolsky.com/WITHJARED.htm
+DEBUG:root:Issue with the url: http://joel.spolsky.com/WITHJARED.htm
+INFO:root:Starting to Crawl Page: http://joel.spolsky.com/biketrip/index.htm
+DEBUG:root:Queued Pages: 9, Crawled Pages: 3
+1.htm
+../index.htm
+INFO:root:Starting to Crawl Page: http://joel.spolsky.com/ARMY.htm
+DEBUG:root:Issue with the url: http://joel.spolsky.com/ARMY.htm
+INFO:root:Starting to Crawl Page: http://joel.spolsky.com/zoop/index.htm
+DEBUG:root:Queued Pages: 8, Crawled Pages: 4
+../index.htm
+INFO:root:Starting to Crawl Page: http://joel.spolsky.com/../snow/index.htm
+DEBUG:root:Issue with the url: http://joel.spolsky.com/../snow/index.htm
+INFO:root:Starting to Crawl Page: http://joel.spolsky.com/beach/index.htm
+DEBUG:root:Queued Pages: 6, Crawled Pages: 5
+INFO:root:Starting to Crawl Page: http://joel.spolsky.com/nn.htm
+DEBUG:root:Issue with the url: http://joel.spolsky.com/nn.htm
+INFO:root:Starting to Crawl Page: http://joel.spolsky.com/1.htm
+DEBUG:root:Issue with the url: http://joel.spolsky.com/1.htm
+INFO:root:Starting to Crawl Page: http://joel.spolsky.com/../index.htm
+DEBUG:root:Issue with the url: http://joel.spolsky.com/../index.htm
+INFO:root:Starting to Crawl Page: http://joel.spolsky.com/BIKE.htm
+DEBUG:root:Issue with the url: http://joel.spolsky.com/BIKE.htm
+INFO:root:Starting to Crawl Page: http://joel.spolsky.com/PRAGUE.htm
+DEBUG:root:Issue with the url: http://joel.spolsky.com/PRAGUE.htm
+INFO:root:Starting to Crawl Page: http://joel.spolsky.com/cpss/index.html
+DEBUG:root:Issue with the url: http://joel.spolsky.com/cpss/index.html
+'generate' took 9.09 sec
