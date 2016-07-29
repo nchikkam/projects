@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+            <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+            xmlns:xhtml="http://www.w3.org/1999/xhtml"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+        	<url>
+                 		<loc>http://joel.spolsky.com</loc>
+                 		<lastmod>Wed, 25 Jan 2006 17:28:18 GMT</lastmod>
+                 		<changefreq>monthly</changefreq>
+                 		<priority> 1 </priority>
+                 	</url>        
+	<url>
+                 		<loc>http://joel.spolsky.com/gallery/index.htm</loc>
+                 		<lastmod>Sat, 21 Apr 2001 05:00:00 GMT</lastmod>
+                 		<changefreq>monthly</changefreq>
+                 		<priority> 1 </priority>
+                 	</url>        
+	<url>
+                 		<loc>http://joel.spolsky.com/biketrip/index.htm</loc>
+                 		<lastmod>Sat, 30 Dec 2000 05:00:00 GMT</lastmod>
+                 		<changefreq>monthly</changefreq>
+                 		<priority> 1 </priority>
+                 	</url>        
+	<url>
+                 		<loc>http://joel.spolsky.com/beach/index.htm</loc>
+                 		<lastmod>Sat, 30 Dec 2000 05:00:00 GMT</lastmod>
+                 		<changefreq>monthly</changefreq>
+                 		<priority> 1 </priority>
+                 	</url>        
+	<url>
+                 		<loc>http://joel.spolsky.com/zoop/index.htm</loc>
+                 		<lastmod>Sat, 30 Dec 2000 05:00:00 GMT</lastmod>
+                 		<changefreq>monthly</changefreq>
+                 		<priority> 1 </priority>
+                 	</url>        
+
+</urlset>
