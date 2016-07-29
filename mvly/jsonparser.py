@@ -109,7 +109,7 @@ class JsonParser(webapp2.RequestHandler):
 class ErrorHandler(webapp2.RequestHandler):
     def get(self):
         """
-            Renders Error Page
+            Renders Error Page, when debug set to True
         :return: None
         """
         template = JINJA_ENVIRONMENT.get_template('jsonparserapperror.html')
