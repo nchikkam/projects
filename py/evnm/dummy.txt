@@ -1,0 +1,27 @@
+from lib.fss import FSS
+from lib.fss import logger
+import unittest
+
+class FSSTest(unittest.TestCase):
+
+    def test_directory_creation_and_deletion(self):
+        fss = FSS("id", "token")
+
+        directory = "temp"
+
+        fss.create_directory(directory)
+        logger.info("Directory Created")
+
+        fss.remove_directory(directory)
+        logger.info("Directory Deleted")
+
+    def test_file_creation_in_a_directory(self, directory, file):
+        fss = FSS()
+
+        test = "test"
+        fss.create_directory(test)
+        fss.create_file(test)
+
+
+if __name__ == "__main__":
+    unittest.main()
