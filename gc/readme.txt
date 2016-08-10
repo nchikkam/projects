@@ -21,23 +21,26 @@ Description:
 crawler:
 
 
-	+------ design					(design diagrams, usecases and typical look of assets json files)
-	|
-	+------ library                 (library to hold the actual SiteMap class and util that casts time taken by the whole Process)
-	|
-	+------ sample_outputs          (For demo purposes, sample sitemaps of two sites were included.)
-	|
-	+------ crawler.py      		(This is the library module that hold the logic 
-	|														and class for site map)
-	|
-	+------ crawlertests.py 		(Testing methodology for the crawler module. Any 
-	|									addition to crawler, must have a test 
-	|										here. In fact, test must be written 
-	|										before method.)
-	|
-	+------ main.py 				(Command line launcher for the crawler module)
-	|
-	+------ readme.txt 				(Textual description of this project, file itself)
+.	+------ design					(design diagrams, usecases and typical look of 
+.	|															assets json files)
+.	+------ library                 (library to hold the actual SiteMap class and 
+.	|									util that casts time taken by the whole 
+.	|																		Process)
+.	|
+.	+------ sample_outputs          (For demo purposes, sample sitemaps of two sites
+.	|															 were included.)
+.	|																
+.	+------ crawler.py      		(This is the library module that hold the logic 
+.	|														and class for site map)
+.	|
+.	+------ crawlertests.py 		(Testing methodology for the crawler module. Any 
+.	|									addition to crawler, must have a test 
+.	|										here. In fact, test must be written 
+.	|										before method.)
+.	|
+.	+------ main.py 				(Command line launcher for the crawler module)
+.	|
+.	+------ readme.txt 				(Textual description of this project, file itself)
 
 
 3. Steps to run the launcher:
