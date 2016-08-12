@@ -10,10 +10,10 @@ def content_file_name(instance, filename):
 
 class Document(models.Model):
 
-    docfile = models.FileField(upload_to='documents/%Y/%m/%d')
-    #docfile = models.FileField(upload_to=content_file_name)
-    #userid = models.CharField(max_length=8)
-    #token = models.CharField(max_length=80)
+    #docfile = models.FileField(upload_to='documents/%Y/%m/%d')
+    docfile = models.FileField(upload_to=content_file_name)
+    userid = models.CharField(max_length=8, default='1')
+    token = models.CharField(max_length=80, default='00000000')
 
 
 class User(models.Model):

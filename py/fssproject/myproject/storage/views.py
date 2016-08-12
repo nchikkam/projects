@@ -53,10 +53,17 @@ def auth(request):
 
 def upload(request):
     # Handle file upload
+    import pdb
+    pdb.set_trace()
+
     if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES)
         if form.is_valid():
-            newdoc = Document(docfile=request.FILES['docfile'])
+            userid = form.cleaned_data['userid']
+            token = form.cleaned_data['token']
+
+            newdoc = Document(docfile=request.FILES['docfile'],
+                              userid=userid, token=token)
             newdoc.save()
 
             # Redirect to the document list after POST
