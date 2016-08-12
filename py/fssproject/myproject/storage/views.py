@@ -1,56 +1,40 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render
-from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
 from myproject.storage.models import (
-    Document,
-    User
-)
-from myproject.storage.forms import (
-    DocumentForm,
-    AuthenticationForm,
-    UploadForm
+    Document
 )
 
-def auth(request):
-    # Handle file upload
+from myproject.storage.forms import (
+    DocumentForm
+)
+
+def service(request):
+
     if request.method == 'POST':
-        form = AuthenticationForm(request.POST)
+        form = DocumentForm(request.POST, request.FILES)
         if form.is_valid():
             userid = form.cleaned_data['userid']
             token = form.cleaned_data['token']
 
-            #user = User(userid=userid, token=token)
-            #user.save()
-            result = User.objects.filter(userid=userid, token=token)
-            if len(result) > 0:
-                # Render list page with the documents and the form
-                #users = User.objects.all()
-                return render(
-                    request,
-                    'loggedin.html',
-                    {'user': result[0], 'form': form}
-                )
-
-            else:
-                return render(
-                    request,
-                    'unauth.html', {}
-                )
+            newdoc = Document(docfile=request.FILES['docfile'],
+                              userid=userid, token=token)
+            newdoc.save()
 
             # Redirect to the document list after POST
-            return HttpResponseRedirect(reverse('list'))
+            return HttpResponseRedirect(reverse('service'))
     else:
-        form = AuthenticationForm()  # A empty, unbound form
+        form = DocumentForm()  # A empty, unbound form
 
     return render(
         request,
-        'auth.html',
+        'service.html',
         {'form': form}
     )
 
+"""
 def upload(request):
     # Handle file upload
     import pdb
@@ -91,3 +75,4 @@ def list(request):
         'list.html',
         {'documents': documents, 'form': form}
     )
+"""
