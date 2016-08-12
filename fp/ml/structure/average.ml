@@ -1,4 +1,7 @@
-(* let ... in *)
+(* 	Local "variables" (really local expressions)
+
+	let ... in 
+*)
 let average a b = 
 	let sum = a +. b in sum /. 2.0;;             (* ;; ends the sum definition block*)
 
