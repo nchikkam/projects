@@ -61,5 +61,6 @@ let ex = factorize (Plus (Times (Value "n", Value "x"),
 
 
 (*	//@ToDo:
-	Exercise: Extend the pattern matching with a Product case so to_string compiles without warning.
+	Exercise: Extend the pattern matching with a Product case so to_string 
+	compiles without warning.
 *)
