@@ -34,3 +34,9 @@ let () = print_list (range 1 10 ~step:2);;
 		and this is invocation:
 		open_window ();;
 *)
+
+(* function with optional arguments must have one argument that is non-labelled *)
+let f ?(x = 0) ?(y = 0) ;;   (* raises error *)
+
+(*The solution is simply to add one argument of type unit*)
+let f ?(x = 0) ?(y = 0) () = print_int (x + y);;

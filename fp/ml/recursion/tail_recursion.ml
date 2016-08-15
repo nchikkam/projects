@@ -29,3 +29,13 @@ let ranget a b =
     range2 a b [];;
 
 let () = print_list (ranget 1 10);;
+
+
+(*short cuts*)
+let is_even x = x mod 2 = 0;;
+
+let is_even x =
+    match x mod 2 with
+    | 0 -> true
+    | 1 | -1 -> false
+    | _ -> assert false;;
