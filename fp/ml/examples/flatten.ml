@@ -1,5 +1,5 @@
 (* 
-	There is no nested list type in OCaml, so we need to define one
+	There is no nested list type, so we need to define one
 	first. A node of a nested list is either an element, or a list of
 	nodes
 *)
