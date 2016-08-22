@@ -214,3 +214,70 @@ public:
 	}
 };
 
+
+void demoOne(){
+    unsigned cacheSize = 20;
+    Cache<string, string> cache(cacheSize);
+
+    cache.print();
+
+    UserDataInMemory userData;
+
+    for(map<string, string>::iterator it = userData.getUserData().begin();
+        it != userData.getUserData().end();
+        ++it) {
+            cache.get((it->first) );
+            cache.print();
+    }
+
+    for(map<string, string>::iterator it = userData.getUserData().begin();
+        it != userData.getUserData().end();
+        ++it) {
+            cache.get((it->first) );
+            cache.print();
+    }
+}
+
+// Demo Two
+void demoBadUserID(){
+    unsigned cacheSize = 20;
+    Cache<string, string> cache(cacheSize);
+
+    cache.print();
+    cache.get("BADUSERID");
+}
+
+// sample demos for testing
+void demos(){
+    demoOne();
+    demoBadUserID();
+}
+
+// Main drive method that invokes the application and generates the report
+// with the help of classes.
+int main (int argc, char *argv[]){
+    unsigned cacheSize;
+
+
+    if(argc == 2){  // all params mentioned
+        cacheSize = atoi(argv[1]);
+        Cache<string, string> cache(cacheSize);
+        string userID;
+        string choice;
+
+        do{
+            cout <<  "Cache Entries: ";
+            cache.print();
+            cout << "Enter UserID to LookUp:" ;
+            cin >> userID;
+            cache.get(userID);
+            cout << "\nContinue with Another Lookup ? [Y/N]: ";
+            cin >> choice;
+        }while(choice.c_str()[0]== 'Y' || choice.c_str()[0]== 'y' );
+
+    }else {  // usage
+        cout<<"usage: "<< argv[0] <<" <capacity>";
+        exit(0);
+    }
+    return 0;
+}
