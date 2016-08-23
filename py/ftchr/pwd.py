@@ -1,3 +1,4 @@
+import unittest
 
 def match_pwd_criteria(pwd):
     digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
@@ -34,13 +35,17 @@ def solution(S):
 
     return sol
 
-s = "a0Ba"
-print solution("a0Ba") #2
-print solution("Ba") #2
+class PasswordVerifier(unittest.TestCase):
 
-print solution("Ba0") #2
-print solution("a0") #2
-print solution("0") #2
-print solution("") #2
+    def test_cases(self):
+        self.assertEqual(solution("a0Ba"), 2)
+        self.assertEqual(solution("Ba"), 2)
+        self.assertEqual(solution("Ba0"), 2)
 
-print solution("a0BAc0C0Da") #2
+        self.assertEqual(solution("a"), -1)
+        self.assertEqual(solution("0"), -1)
+        self.assertEqual(solution(""), -1)
+        self.assertEqual(solution("a0BAc0C0Da"), 3)
+
+if __name__ == "__main__":
+    unittest.main()
