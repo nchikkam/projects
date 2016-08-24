@@ -48,7 +48,7 @@ def get_password(username):
 
 @auth.error_handler
 def unauthorized():
-    return make_response(jsonify({'error': 'Unauthorized access'}), 401) # 401 causes browser to open login dialog box.
+    return make_response(jsonify({'error': 'Unauthorized access'}), 403) # 401 causes browser to open login dialog box.
 
 
 @app.route('/todo/api/v1.0/tasks', methods=['GET'])

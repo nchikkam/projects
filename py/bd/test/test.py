@@ -9,7 +9,7 @@ class TestRestAPI(unittest.TestCase):
 	def test_get_list_unauthorized_case(self):
 		url = 'http://127.0.0.1:5000/todo/api/v1.0/tasks'
 		r = requests.get(url)
-		self.assertEqual(r.status_code, 401)
+		self.assertEqual(r.status_code, 403)
 		pprint(r.text)
 
 	def test_get_list_authorized_case(self):
