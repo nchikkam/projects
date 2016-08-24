@@ -6,6 +6,8 @@ from flask import (
 	request,
 	url_for
 )
+from flask.ext.httpauth import HTTPBasicAuth
+
 
 app = Flask(__name__)
 
@@ -34,7 +36,23 @@ def make_public_task(task):
             new_task[field] = task[field]
     return new_task
 
+## Authentication Part:
+
+auth = HTTPBasicAuth()
+
+@auth.get_password
+def get_password(username):
+    if username == 'bdusr':
+        return 'bdpwd'
+    return None
+
+@auth.error_handler
+def unauthorized():
+    return make_response(jsonify({'error': 'Unauthorized access'}), 401) # 401 causes browser to open login dialog box.
+
+
 @app.route('/todo/api/v1.0/tasks', methods=['GET'])
+@auth.login_required
 def get_tasks():
     return jsonify({'tasks': [make_public_task(task) for task in tasks]})
 
