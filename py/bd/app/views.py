@@ -3,7 +3,6 @@ from app import app
 from .forms import (
     BigDataStoreForm
 )
-from .models import BigData
 
 from functools import wraps
 
@@ -31,32 +30,45 @@ def requires_auth(f):
         return f(*args, **kwargs)
     return decorated
 
+
+BigData = [
+    { 'data': "It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife."},
+    { 'data': "To be fond of dancing was a certain step towards falling in love."},
+    { 'data': "Jane Austen was an English novelist known primarily for her six major novels which interpret, critique and comment upon the life of the British landed gentry at the end of the 18th century"},
+    { 'data': "travelling, skiing, swimming, hockey, cricket are sports"},
+    { 'data': "target.com is an online competitor"},
+    { 'data': "Amazon supports online selling and buying for retail business by hosting an online platform on a cloud."},
+    { 'data': "Google is a search based company, they crawl all the pages on internet at specified frequencies and use pagerank alogorithm to rank the pages."}
+]
+
+
 @app.route('/us/rawdata/1.0/searchitems', methods=['GET', 'POST'])
 @requires_auth
 def searchitems():
     form = BigDataStoreForm()
     if request.method == 'GET':
-        data = BigData.query.all()
+        data = BigData
         return render_template('restservice.html',
                                title='Rest Service',
                                form=form,
                                searchitems=data)
     elif request.method == 'POST':
         search_word = request.form['search_word']
-        data = BigData.query.filter(BigData.data.contains(search_word)).all()
+        records =  []
+        for record in BigData:
+            if search_word in record['data']:
+                records.append(record)
+
         return render_template('restservice.html',
                                title='Rest Service',
                                form=form,
-                               searchitems=data)
+                               searchitems=records)
 
 @app.route('/us/rawdata/1.0/searchitems/<int:top_limit>', methods=['GET'])
 @requires_auth
 def search_top_limit_items(top_limit):
     form = BigDataStoreForm()
-    from .models import BigData
-
-    print (top_limit)
-    data = BigData.query.limit(top_limit).all()
+    data = BigData[:top_limit]
     return render_template('restservice.html',
                            title='Rest Service',
                            form=form,
