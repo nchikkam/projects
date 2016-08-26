@@ -1,10 +1,11 @@
 from flask import render_template, request, jsonify
 from app import app
 from .forms import (
-    VideoDataStoreForm,
-    AudioDataStoreForm,
-    WeatherDataStoreForm
+    BigDataStoreForm
 )
+from .models import BigData
+
+
 from functools import wraps
 
 def check_auth(username, password):
@@ -31,27 +32,36 @@ def requires_auth(f):
         return f(*args, **kwargs)
     return decorated
 
-@app.route('/service')
-@requires_auth
-def api_service():
-    return "Service are available"
-
 @app.route('/services')
 @requires_auth
 def api_services():
     return "Services are available"
 
-@app.route('/weatherdatastore', methods=['GET', 'POST'])
-def index():
-    form = VideoDataStoreForm()
+@app.route('/us/rawdata/1.0/searchitems', methods=['GET', 'POST'])
+def searchitems():
+    form = BigDataStoreForm()
     if request.method == 'GET':
-        return render_template('weatherdatastore.html',
-                title='Weather Data Store',
-                form=form)
+        data = BigData.query.all()
+        return render_template('restservice.html',
+                               title='Rest Service',
+                               form=form,
+                               searchitems=data)
     elif request.method == 'POST':
         search_word = request.form['search_word']
-        #return search_word
+        data = BigData.query.filter(BigData.data.contains(search_word)).all()
+        return render_template('restservice.html',
+                               title='Rest Service',
+                               form=form,
+                               searchitems=data)
 
-        from .models import Weather
+@app.route('/us/rawdata/1.0/searchitems/<int:top_limit>', methods=['GET'])
+def search_top_limit_items(top_limit):
+    form = BigDataStoreForm()
+    from .models import BigData
 
-        return str(Weather.query.all()[0])
+    print (top_limit)
+    data = BigData.query.limit(top_limit).all()
+    return render_template('restservice.html',
+                           title='Rest Service',
+                           form=form,
+                           searchitems=data)

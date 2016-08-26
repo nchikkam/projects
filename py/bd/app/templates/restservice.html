@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Big Data Store REST API(s)</h1>
+    <form action="http://127.0.0.1:5000/us/rawdata/1.0/searchitems" method="post" name="">
+        {{ form.hidden_tag() }}
+        The page showcases a set of 3 REST API(s) namely:
+        <pre>
+<a href="http://127.0.0.1:5000/us/rawdata/1.0/searchitems">GET All Data Store Records</a> GET Many Records
+<a href="http://127.0.0.1:5000/us/rawdata/1.0/searchitems/5">GET Top 5 Data Store Records</a> GET few records
+
+        </pre>
+Below is POST request with Search word as Payload:
+        <hr>
+        <p>
+            Enter a search word to search for its presence in Data Store:<br><br>
+            {{ form.search_word(size=20) }}
+            {% for error in form.search_word.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}<br>
+
+            {% if searchitems %}
+                <br><br>
+                Current Data in the Store:
+                {% for item in searchitems %}
+                    <li>{{ item.data }} </li>
+                {% endfor %}
+            {% else %}
+                <p> Search Yields NO Results </p>
+            {% endif %}
+        </p>
+        <p><input type="submit" value="Search With SearchWord"></p>
+    </form>
+
+{% endblock %}

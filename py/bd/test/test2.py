@@ -7,7 +7,7 @@ import unittest
 class TestRestAPI(unittest.TestCase):
 
 	def test_get_list_authorized_case(self):
-		url = 'http://127.0.0.1:5000/todo/api/v1.0/tasks'
+		url = 'http://127.0.0.1:5000/us/rawdata/1.0/searchitems'
 		r = requests.get(url,
 				auth=requests.auth.HTTPBasicAuth(
 				'bdusr',
@@ -17,7 +17,7 @@ class TestRestAPI(unittest.TestCase):
 		pprint(r.text)
 
 	def test_get(self):
-		url = 'http://127.0.0.1:5000/todo/api/v1.0/tasks/1'
+		url = 'http://127.0.0.1:5000/us/rawdata/1.0/searchitems/2'
 		r = requests.get(url,
 				auth=requests.auth.HTTPBasicAuth(
 				'bdusr',
@@ -26,69 +26,22 @@ class TestRestAPI(unittest.TestCase):
 		self.assertEqual(r.status_code, 200)
 		pprint(r.text)
 
-	def test_get_error(self):
-		url = 'http://127.0.0.1:5000/todo/api/v1.0/tasks/79'
-		r = requests.get(url,
-				auth=requests.auth.HTTPBasicAuth(
-				'bdusr',
-				'bdpwd')
-		)
-		self.assertEqual(r.status_code, 404)
-		pprint(r.text)
-
-
 	def test_post(self):
-		url = 'http://127.0.0.1:5000/todo/api/v1.0/tasks'
+		url = 'http://127.0.0.1:5000/us/rawdata/1.0/searchitems'
 
 		post_data = {
-			"description": "",
-			"done": False,
-			"id": 3,
-			"title": "Read a book"
+			"search_word": "ss"
 		}
 
-		headers = {'Content-Type': 'application/json'}
+		headers = {'Content-Type': 'application/x-www-form-urlencoded'}
 		r = requests.post(url,
 				auth=requests.auth.HTTPBasicAuth(
 				'bdusr',
 				'bdpwd'),
-              data=json.dumps(post_data), headers=headers
+              data=post_data, headers=headers
 		)
-		self.assertEqual(r.status_code, 201)   # http standard code for created
+		self.assertEqual(r.status_code, 200)
 		pprint(r.text)
-
-	def test_put(self):
-		url = 'http://127.0.0.1:5000/todo/api/v1.0/tasks/2'  # updating task to Done
-
-		post_data = {
-			"done": True,					# False to True
-		}
-
-		headers = {'Content-Type': 'application/json'}
-		r = requests.put(url,
-				auth=requests.auth.HTTPBasicAuth(
-				'bdusr',
-				'bdpwd'),
-              data=json.dumps(post_data), headers=headers
-		)
-		self.assertEqual(r.status_code, 200)   # http standard code for created
-		pprint(r.text)
-
-	def test_delete(self):
-		url = 'http://127.0.0.1:5000/todo/api/v1.0/tasks/2'  # updating task to Done
-
-		headers = {'Content-Type': 'application/json'}
-		r = requests.delete(url, 
-			auth=requests.auth.HTTPBasicAuth(
-				'bdusr',
-				'bdpwd'),
-			headers=headers
-		)
-		self.assertEqual(r.status_code, 200)   # http standard code for created
-		pprint(r.text)
-
-
-
 
 if __name__ == "__main__":
 	unittest.main()

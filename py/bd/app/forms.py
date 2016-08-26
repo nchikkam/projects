@@ -1,11 +1,5 @@
 from flask.ext.wtf import Form
-from wtforms import StringField
+from wtforms import StringField, validators
 
-class WeatherDataStoreForm(Form):
-    search_word = StringField('Weather Search')
-
-class AudioDataStoreForm(Form):
-    search_word = StringField('Audio Search')
-
-class VideoDataStoreForm(Form):
-    search_word = StringField('Video Search')
+class BigDataStoreForm(Form):
+    search_word = StringField('Video Search', [validators.DataRequired()])
