@@ -5,7 +5,6 @@ from .forms import (
 )
 from .models import BigData
 
-
 from functools import wraps
 
 def check_auth(username, password):
@@ -32,12 +31,8 @@ def requires_auth(f):
         return f(*args, **kwargs)
     return decorated
 
-@app.route('/services')
-@requires_auth
-def api_services():
-    return "Services are available"
-
 @app.route('/us/rawdata/1.0/searchitems', methods=['GET', 'POST'])
+@requires_auth
 def searchitems():
     form = BigDataStoreForm()
     if request.method == 'GET':
@@ -55,6 +50,7 @@ def searchitems():
                                searchitems=data)
 
 @app.route('/us/rawdata/1.0/searchitems/<int:top_limit>', methods=['GET'])
+@requires_auth
 def search_top_limit_items(top_limit):
     form = BigDataStoreForm()
     from .models import BigData
