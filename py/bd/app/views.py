@@ -53,7 +53,5 @@ def index():
         #return search_word
 
         from .models import Weather
-        import pdb
-        pdb.set_trace()
 
         return str(Weather.query.all()[0])
