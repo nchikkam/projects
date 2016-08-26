@@ -1,35 +1,18 @@
 #!flask/bin/python
 
-"""Alternative version of the ToDo RESTful server implemented using the
-Flask-RESTful extension."""
-
 from flask import Flask, jsonify, abort, make_response
 from flask.ext.restful import Api, Resource, reqparse, fields, marshal
 from flask.ext.httpauth import HTTPBasicAuth
-
-# new start
-from flask.ext.sqlalchemy import SQLAlchemy
-import os
-from .models import Result
 
 app = Flask(__name__, static_url_path="")
 api = Api(app)
 auth = HTTPBasicAuth()
 
 
-if 'APP_SETTINGS' not in os.environ:
-    os.environ['APP_SETTINGS'] = "config.Config"
-
-app.config.from_object(os.environ['APP_SETTINGS'])
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
-# new end
-
-
 @auth.get_password
 def get_password(username):
-    if username == 'bdusr':
-        return 'bdpwd'
+    if username == 'miguel':
+        return 'python'
     return None
 
 
@@ -127,6 +110,3 @@ class TaskAPI(Resource):
 api.add_resource(TaskListAPI, '/todo/api/v1.0/tasks', endpoint='tasks')
 api.add_resource(TaskAPI, '/todo/api/v1.0/tasks/<int:id>', endpoint='task')
 
-
-if __name__ == '__main__':
-    app.run(debug=True)
