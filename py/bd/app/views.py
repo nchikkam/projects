@@ -42,6 +42,10 @@ BigData = [
 ]
 
 
+@app.route('/')
+def home_page():
+    return "Home Page"
+
 @app.route('/us/rawdata/1.0/searchitems', methods=['GET', 'POST'])
 @requires_auth
 def searchitems():

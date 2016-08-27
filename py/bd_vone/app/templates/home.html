@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Big Data Store REST API(s)</h1>
+    <form action="https://bigdata-returnpath.herokuapp.com/us/rawdata/1.0/searchitems" method="post" name="">
+        {{ form.hidden_tag() }}
+        The page showcases a set of 3 REST API(s) namely:
+        <pre>
+<a href="https://bigdata-returnpath.herokuapp.com/us/rawdata/1.0/searchitems">GET All Data Store Records</a> GET Many Records
+<a href="https://bigdata-returnpath.herokuapp.com/us/rawdata/1.0/searchitems/5">GET Top 5 Data Store Records</a> GET few records
+        </pre>
+        <p>
+            Enter a search word to search for its presence in Data Store:<br><br>
+            {{ form.search_word(size=20) }}
+            {% for error in form.search_word.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+
+        </p>
+        <p><input type="submit" value="Search With SearchWord"></p>
+    <hr>
+
+    <div>
+        <div id="box1" class="box1"><h4>REST HTTP GET request for all Data Store Items</h4></div>
+        <div id="box2" class="box2"><h4>REST HTTP GET request for specified no of Data Store Items</h4></div>
+        <div id="box3" class="box3"><h4>Query Data Store with HTTP REST POST for Items with "ss"</h4></div>
+    </div>
+
+    </form>
+
+{% endblock %}

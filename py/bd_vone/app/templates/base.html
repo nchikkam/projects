@@ -1,0 +1,89 @@
+  <html>
+  <head>
+    <style type="text/css">
+        .box1
+          {
+          background-color: #ffffD0;
+          width: 33%;
+          float:left;
+          overflow-y: auto;
+          height: 340px;
+        }
+        .box2
+        {
+          background-color: #ffffE0;
+          width: 33%;
+          float:right;
+          overflow-y: auto;
+          height: 340px;
+        }
+        .box3
+        {
+          background-color: #ffffD0;
+          width: 33%;
+          margin:0 auto;
+          overflow-y: auto;
+          height: 340px;
+        }
+    </style>
+    {% if title %}
+    <title>{{ title }} - Big Data API(s)</title>
+    {% else %}
+    <title>Big Data API(s)</title>
+    {% endif %}
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+
+      
+      $(document).ready(function(){
+          var url = "https://bigdata-returnpath.herokuapp.com/us/rawdata/1.0/searchitems";
+
+          $.getJSON(url,function(data){
+              $.each(data, function(i,post){
+                  $.each(post, function(j, entry){
+                    var content = '<li>' + entry.data + '<li>';
+                    $(content).appendTo("#box1");
+                  });
+              });
+          });
+
+          $.getJSON(url +"/3",function(data){
+              $.each(data, function(i,post){
+                  $.each(post, function(j, entry){
+                    var content = '<li>' + entry.data + '<li>';
+                    $(content).appendTo("#box2");
+                  });
+              });
+          });  
+
+          var posting = $.post( url, { "search_word": "ss" } );
+   
+          // Put the results in a div
+          posting.done(function( data ) {
+            $.each(data, function(j, entry){
+                var content = '<li>' + entry.data + '<li>';
+                $(content).appendTo("#box3");
+              });
+          });
+
+      });
+
+    </script>
+
+  </head>
+  <body>
+    <hr>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+    {% for message in messages %}
+        <li>{{ message }} </li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+
+  </body>
+</html>
