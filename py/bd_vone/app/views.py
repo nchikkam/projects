@@ -10,7 +10,7 @@ def check_auth(username, password):
     return username == 'dummy' and password == 'dummy'
 
 def authenticate():
-    message = {'message': "Authentication."}
+    message = {'error': "Authentication Failure"}
     resp = jsonify(message)
 
     resp.status_code = 401
@@ -554,23 +554,26 @@ def home_page():
 @app.route('/us/rawdata/1.0/searchitems', methods=['GET', 'POST'])
 @requires_auth
 def searchitems():
-    form = BigDataStoreForm()
-    if request.method == 'GET':
-        data = {'items': BigData}
-        return jsonify(data)
+    try:
+        if request.method == 'GET':
+            data = {'items': BigData}
+            return jsonify(data)
 
-    elif request.method == 'POST':
-        search_word = request.form['search_word']
-        records =  []
-        for record in BigData:
-            if search_word in record['data']:
-                records.append(record)
-        return jsonify(records)
+        elif request.method == 'POST':
+            search_word = request.form['search_word']
+            records =  []
+            for record in BigData:
+                if search_word in record['data']:
+                    records.append(record)
+            return jsonify(records)
+    except:
+        return {
+            'error': "server unable to handle the request"
+        }
 
 @app.route('/us/rawdata/1.0/searchitems/<int:top_limit>', methods=['GET'])
 @requires_auth
 def search_top_limit_items(top_limit):
-    form = BigDataStoreForm()
     data = BigData[:top_limit]
     data = {'items': data}
     return jsonify(data)
