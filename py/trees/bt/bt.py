@@ -87,6 +87,42 @@ def count_internal_nodes(root):
         return count_internal_nodes(root.left) + count_internal_nodes(root.right) + 1
     return 0
 
+def count_nodes(root):
+    if root:
+        return count_nodes(root.left)+count_nodes(root.right)+1
+    return 0
+
+def find_nth_smallest(root, n):
+    if root:
+        l = find_nth_smallest(root.left, n)
+        lc = count_nodes(root.left)
+        if lc + 1 == n: return root
+
+        rc = count_nodes(root.right)
+        c = n
+        if lc + rc + 1 >= n:
+            c = n - (lc+1)
+        r = find_nth_smallest(root.right, c)
+
+        if l: return l
+        return r
+
+def find_nth_biggest(root, n):
+    if root:
+        r = find_nth_biggest(root.right, n)
+        rc = count_nodes(root.right)
+        if rc + 1 == n: return root
+
+        lc = count_nodes(root.left)
+        c = n
+        if rc + lc + 1 >= n:
+            c = n - (rc+1)
+        l = find_nth_biggest(root.left, c)
+
+        if r: return r
+        return l
+
+
 
 def test():
     root = None
@@ -121,4 +157,31 @@ def test_one():
 
     print(count_internal_nodes(root))
 
-test_one()
+
+def test_two():
+    root = None
+    data = [11, 6, 19, 4, 8, 17, 43, 3, 5, 7, 10, 16, 18, 31, 49]
+    for d in data:
+        root = insert(root, d)
+    print(count_nodes(root))
+
+def test_three():
+    root = None
+    wdata = [11, 6, 19, 4, 8, 17, 43, 3, 5, 7, 10, 16, 18, 31, 49]
+    data = [4, 2, 6, 1, 3, 5, 7]
+    for d in data:
+        root = insert(root, d)
+
+    data.sort()
+    for i, n in enumerate(data):
+        print("{} ".format(find_nth_smallest(root, i+1).data), end='')
+
+    print("\n")
+
+    i = len(data)
+    while i > 0:
+        print("{} ".format(find_nth_biggest(root, i).data), end='')
+        i -= 1
+
+
+test_three()
