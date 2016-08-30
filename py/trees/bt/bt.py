@@ -31,7 +31,6 @@ def postorder(root):
         postorder(root.right)
         print(root.data, end='')
 
-
 def dfs(root):
     inorder(root)  # this uses implicit stack
 
@@ -64,8 +63,8 @@ def bfs_spiral_order(root):
         if current.right != None:
             cq.append(current.right)
         if len(pq) == 0:
-            flag *= -1
-            pq = cq[:] # copy to parent queue
+            flag *= -1  # flip the direction
+            pq = cq[:]  # copy to parent queue
             cq = []
             toprint = [str(x.data) for x in pq]
 
@@ -74,10 +73,27 @@ def bfs_spiral_order(root):
             else:
                 print("".join(reversed(toprint)))
 
-def bfs_spiral_print():
+
+def count_leaves(root):
+    if root:
+        if root.left == None and root.right == None:
+            return 1
+        return count_leaves(root.left) + count_leaves(root.right)
+    return 0
+
+
+
+def test():
     root = None
     data = [11, 6, 19, 4, 8, 17, 43, 3, 5, 7, 10, 16, 18, 31, 49]
     for d in data:
         root = insert(root, d)
 
-    bfs_spiral_order(root)
+    #bfs_spiral_order(root)
+    root = Node(2)
+    root.left = Node(1)
+    root.right = Node(3)
+    print(count_leaves(root))
+
+
+test()
