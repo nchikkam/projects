@@ -73,7 +73,6 @@ def bfs_spiral_order(root):
             else:
                 print("".join(reversed(toprint)))
 
-
 def count_leaves(root):
     if root:
         if root.left == None and root.right == None:
@@ -81,6 +80,12 @@ def count_leaves(root):
         return count_leaves(root.left) + count_leaves(root.right)
     return 0
 
+def count_internal_nodes(root):
+    if root:
+        if root.left == None and root.right == None:
+            return 0
+        return count_internal_nodes(root.left) + count_internal_nodes(root.right) + 1
+    return 0
 
 
 def test():
@@ -89,11 +94,31 @@ def test():
     for d in data:
         root = insert(root, d)
 
+    print(count_internal_nodes(root))
+
     #bfs_spiral_order(root)
     root = Node(2)
     root.left = Node(1)
     root.right = Node(3)
     print(count_leaves(root))
 
+def test_one():
+    """
+            4
+    2               6
+    1       3       5        7
+    """
 
-test()
+
+    root = None
+    root = insert(root, 4)
+    root = insert(root, 2)
+    root = insert(root, 6)
+    root = insert(root, 1)
+    root = insert(root, 3)
+    root = insert(root, 5)
+    root = insert(root, 7)
+
+    print(count_internal_nodes(root))
+
+test_one()
