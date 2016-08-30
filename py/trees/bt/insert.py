@@ -13,6 +13,25 @@ def insert(root, data):
     #we dont insert duplicates
     return root
 
+def inorder(root):
+    if root != None:
+        inorder(root.left)
+        print(root.data, end='')
+        inorder(root.right)
+
+def preorder(root):
+    if root != None:
+        print(root.data, end='')
+        preorder(root.left)
+        preorder(root.right)
+
+def postorder(root):
+    if root != None:
+        postorder(root.left)
+        postorder(root.right)
+        print(root.data, end='')
+
+
 import unittest
 class Test(unittest.TestCase):
     def test_insert(self):
@@ -48,6 +67,18 @@ class Test(unittest.TestCase):
         self.assertEquals(root.right.left.right, None)
         self.assertEquals(root.right.right.left, None)
         self.assertEquals(root.right.right.right, None)
+
+    def test_tree_visit_orders(self):
+        data =[4, 2, 6, 1, 3, 5, 7]
+        root = None
+        for d in data:
+            root = insert(root, d)
+        print("INORDER:")
+        inorder(root)
+        print("\nPREORDER:")
+        preorder(root)
+        print("\nPOSTORDER:")
+        postorder(root)
 
 if __name__ == "__main__":
     unittest.main()
