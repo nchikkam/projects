@@ -122,7 +122,30 @@ def find_nth_biggest(root, n):
         if r: return r
         return l
 
+def height(root):
+    if root:
+        return max(
+            height(root.left), \
+            height(root.right)
+        ) + 1
+    return 0
 
+def width(root): # same as bfs spiral order
+    pq = [root]
+    cq = []
+    wid = 1
+    while len(pq) != 0:
+        current = pq.pop(0)
+        if current.left != None:
+            cq.append(current.left)
+        if current.right != None:
+            cq.append(current.right)
+        if len(pq) == 0:
+            pq = cq[:]  # copy to parent queue
+            cq = []
+            if wid < len(pq):
+                wid = len(pq)
+    return wid
 
 def test():
     root = None
@@ -182,6 +205,11 @@ def test_three():
     while i > 0:
         print("{} ".format(find_nth_biggest(root, i).data), end='')
         i -= 1
+    print("\n")
+    print (height(root))
+
+    print("\n")
+    print(width(root))
 
 
 test_three()
