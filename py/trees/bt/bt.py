@@ -130,7 +130,7 @@ def height(root):
         ) + 1
     return 0
 
-def width(root): # same as bfs spiral order
+def max_width(root): # same as bfs spiral order
     pq = [root]
     cq = []
     wid = 1
@@ -146,6 +146,8 @@ def width(root): # same as bfs spiral order
             if wid < len(pq):
                 wid = len(pq)
     return wid
+
+def convert_to_list(root):
 
 def test():
     root = None
@@ -209,7 +211,6 @@ def test_three():
     print (height(root))
 
     print("\n")
-    print(width(root))
-
+    print(max_width(root))
 
 test_three()
