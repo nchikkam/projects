@@ -16,7 +16,7 @@ def insert(root, data):
 def inorder(root):
     if root != None:
         inorder(root.left)
-        print(root.data, end='')
+        print("{} ".format(root.data), end='')
         inorder(root.right)
 
 def preorder(root):
@@ -180,6 +180,33 @@ def print_dll(dll):
         print("{} ".format(dll.data), end='')
         dll = dll.right
 
+def find_min(root):
+    while root.left:
+        root = root.left
+    return root
+
+def delete(root, data):
+    if root:
+        if data < root.data:
+            root.left = delete(root.left, data)
+        elif data > root.data:
+            root.right = delete(root.right, data)
+        elif root.left and root.right:
+            l = find_min(root.right)
+            root.data = l.data
+            root.right = delete(root.right, l.data)
+        elif root.left == None and root.right == None:
+            return None
+        else:
+            if root.left:
+                root = root.left
+            elif root.right:
+                root = root.right
+        return root
+    return None
+
+
+
 def test():
     root = None
     data = [11, 6, 19, 4, 8, 17, 43, 3, 5, 7, 10, 16, 18, 31, 49]
@@ -263,5 +290,19 @@ def test_four():
     dll = to_doubly_linked_list(root)
     print_dll(dll)
 
+def test_five():
+    data = [11, 6, 19, 4, 8, 17, 43, 3, 5, 7, 10, 16, 18, 31, 49]
+    root = None
+    for d in data:
+        root = insert(root, d)
 
-test_four()
+    print("\n")
+    print(find_min(root).data)
+
+    d = [3, 4, 5, 6, 7, 8, 10, 11, 16, 17, 18, 19, 31, 43, 49]
+    for v in d:
+        root = delete(root, v)
+        inorder(root)
+        print("\n")
+
+test_five()
