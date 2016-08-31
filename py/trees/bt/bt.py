@@ -147,7 +147,38 @@ def max_width(root): # same as bfs spiral order
                 wid = len(pq)
     return wid
 
-def convert_to_list(root):
+def to_doubly_linked_list(root):
+    def convert_to_list(root):
+        if root:
+            # find inorder predecessor of root
+            if root.left:
+                l = convert_to_list(root.left)
+                while l.right:
+                    l = l.right
+                l.right = root
+                root.left = l
+
+            # find inorder successor of root
+            if root.right:
+                r = convert_to_list(root.right)
+                while r.left:
+                    r = r.left
+                r.left = root
+                root.right = r
+            return root
+        return None
+
+    head = convert_to_list(root)
+    # move to head
+    while head.left:
+        head = head.left
+
+    return head
+
+def print_dll(dll):
+    while dll:
+        print("{} ".format(dll.data), end='')
+        dll = dll.right
 
 def test():
     root = None
@@ -213,4 +244,24 @@ def test_three():
     print("\n")
     print(max_width(root))
 
-test_three()
+def test_four():
+    data = [4, 2, 6, 1, 3, 5, 7]
+    root = None
+    for d in data:
+        root = insert(root, d)
+
+    print("\n")
+    dll = to_doubly_linked_list(root)
+    print_dll(dll)
+
+    data = [11, 6, 19, 4, 8, 17, 43, 3, 5, 7, 10, 16, 18, 31, 49]
+    root = None
+    for d in data:
+        root = insert(root, d)
+
+    print("\n")
+    dll = to_doubly_linked_list(root)
+    print_dll(dll)
+
+
+test_four()
