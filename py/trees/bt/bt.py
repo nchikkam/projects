@@ -215,6 +215,27 @@ def search(root, x):
             return True
     return False
 
+def inorder_successor(root, x):
+    succ = None
+    while root:
+        if x < root.data:
+            succ = root
+            root = root.left
+        else:
+            root = root.right
+    return succ
+
+def inorder_predecessor(root, x):
+    pred = None
+    while root:
+        if x > root.data:
+            pred = root
+            root = root.right
+        else:
+            root = root.left
+    return pred
+
+
 def test():
     root = None
     data = [11, 6, 19, 4, 8, 17, 43, 3, 5, 7, 10, 16, 18, 31, 49]
@@ -323,4 +344,23 @@ def test_six():
 
     print(search(root, 100))
 
-test_six()
+def test_seven():
+    data = [11, 6, 19, 4, 8, 17, 43, 3, 5, 7, 10, 16, 18, 31, 49]
+    root = None
+    for d in data:
+        root = insert(root, d)
+
+    print(inorder_successor(root, 16).data)
+    print(inorder_successor(root, 31).data)
+    print(inorder_successor(root, 18).data)
+    print(inorder_successor(root, 10).data)
+    print(inorder_successor(root, 19).data)
+
+
+    print(inorder_predecessor(root, 16).data)
+    print(inorder_predecessor(root, 11).data)
+    print(inorder_predecessor(root, 19).data)
+    print(inorder_predecessor(root, 4).data)
+    
+
+test_seven()
