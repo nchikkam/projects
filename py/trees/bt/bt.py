@@ -205,7 +205,15 @@ def delete(root, data):
         return root
     return None
 
-
+def search(root, x):
+    if root:
+        if x < root.data:
+            return search(root.left, x)
+        elif x > root.data:
+            return search(root.right, x)
+        else:
+            return True
+    return False
 
 def test():
     root = None
@@ -305,4 +313,14 @@ def test_five():
         inorder(root)
         print("\n")
 
-test_five()
+def test_six():
+    data = [11, 6, 19, 4, 8, 17, 43, 3, 5, 7, 10, 16, 18, 31, 49]
+    root = None
+    for d in data:
+        root = insert(root, d)
+    for d in data:
+        print(search(root, d))
+
+    print(search(root, 100))
+
+test_six()
