@@ -235,24 +235,54 @@ def inorder_predecessor(root, x):
             root = root.left
     return pred
 
-def preorder_sccessor(root, key, d):
+def preorder_sccessor(root, data, d):
    if root:
-       if key==root.data:
+       if data==root.data:
            d['found'] = True
            if root.left:
                return root.left
            else:
                return root.right
 
-       succs = preorder_sccessor(root.left, key, d)
+       succs = preorder_sccessor(root.left, data, d)
        if succs==None:
            if d['found']:
                return root.right
            else:
-               return preorder_sccessor(root.right, key, d)
+               return preorder_sccessor(root.right, data, d)
        else:
            return succs
-       return None
+   return None
+
+def find_left_most(root):
+    while root and root.left:
+        root = root.left
+    return root
+
+def find_right_most(root):
+    while root and root.right:
+        root = root.right
+    return root
+
+def preorder_predecessor(root, data, d):
+    def preorder_predecessor_parent(root, parent, data, d):
+        if root:
+            if data == root.data:
+                d['found'] = True
+                return parent
+
+            preds = preorder_predecessor_parent(root.left, root, data, d)
+            if preds == None:
+                if d['found']:
+                    return parent
+                else:
+                    preds = find_right_most(root.left)
+                    return preorder_predecessor_parent(root.right, preds, data, d)
+            else:
+                return preds
+        return None
+
+    return preorder_predecessor_parent(root, None, data, d)
 
 def test():
     root = None
@@ -393,5 +423,29 @@ def test_eight():
     print(preorder_sccessor(root, 5, {'found': False}).data)
     print(preorder_sccessor(root, 19, {'found': False}).data)
     print(preorder_sccessor(root, 31, {'found': False}).data)
+    print(preorder_sccessor(root, 43, {'found': False}).data)
 
-test_eight()
+def test_nine():
+    data = [11, 6, 19, 4, 8, 17, 43, 3, 5, 7, 10, 16, 18, 31, 49]
+    root = None
+    for d in data:
+        root = insert(root, d)
+
+    preorder(root) # 11 6 4 3 5 8 7 10 19 17 16 18 43 31 49
+    print("\n")
+    print(preorder_predecessor(root, 4, {'found': False}).data)
+    print(preorder_predecessor(root, 6, {'found': False}).data)
+    print(preorder_predecessor(root, 49, {'found': False}).data)
+    print(preorder_predecessor(root, 31, {'found': False}).data)
+    print(preorder_predecessor(root, 43, {'found': False}).data)
+    print(preorder_predecessor(root, 18, {'found': False}).data)
+    print(preorder_predecessor(root, 16, {'found': False}).data)
+    print(preorder_predecessor(root, 17, {'found': False}).data)
+    print(preorder_predecessor(root, 19, {'found': False}).data)
+    print(preorder_predecessor(root, 10, {'found': False}).data)
+    print(preorder_predecessor(root, 7, {'found': False}).data)
+    print(preorder_predecessor(root, 8, {'found': False}).data)
+    print(preorder_predecessor(root, 5, {'found': False}).data)
+    print(preorder_predecessor(root, 3, {'found': False}).data)
+
+test_nine()
