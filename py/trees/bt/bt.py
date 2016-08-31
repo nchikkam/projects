@@ -21,7 +21,7 @@ def inorder(root):
 
 def preorder(root):
     if root != None:
-        print(root.data, end='')
+        print("{} ".format(root.data), end='')
         preorder(root.left)
         preorder(root.right)
 
@@ -29,7 +29,7 @@ def postorder(root):
     if root != None:
         postorder(root.left)
         postorder(root.right)
-        print(root.data, end='')
+        print("{} ".format(root.data), end='')
 
 def dfs(root):
     inorder(root)  # this uses implicit stack
@@ -235,6 +235,24 @@ def inorder_predecessor(root, x):
             root = root.left
     return pred
 
+def preorder_sccessor(root, key, d):
+   if root:
+       if key==root.data:
+           d['found'] = True
+           if root.left:
+               return root.left
+           else:
+               return root.right
+
+       succs = preorder_sccessor(root.left, key, d)
+       if succs==None:
+           if d['found']:
+               return root.right
+           else:
+               return preorder_sccessor(root.right, key, d)
+       else:
+           return succs
+       return None
 
 def test():
     root = None
@@ -361,6 +379,19 @@ def test_seven():
     print(inorder_predecessor(root, 11).data)
     print(inorder_predecessor(root, 19).data)
     print(inorder_predecessor(root, 4).data)
-    
 
-test_seven()
+
+def test_eight():
+    data = [11, 6, 19, 4, 8, 17, 43, 3, 5, 7, 10, 16, 18, 31, 49]
+    root = None
+    for d in data:
+        root = insert(root, d)
+
+    preorder(root) # 11 6 4 3 5 8 7 10 19 17 16 18 43 31 49
+    print("\n")
+    print(preorder_sccessor(root, 4, {'found': False}).data)
+    print(preorder_sccessor(root, 5, {'found': False}).data)
+    print(preorder_sccessor(root, 19, {'found': False}).data)
+    print(preorder_sccessor(root, 31, {'found': False}).data)
+
+test_eight()
