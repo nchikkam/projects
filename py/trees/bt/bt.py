@@ -284,7 +284,7 @@ def preorder_predecessor(root, data, d):
 
     return preorder_predecessor_parent(root, None, data, d)
 
-def lowest_common_ancestor_bst(root, a, b):
+def lowest_common_ancestor_bst(root, a, b):  # good because if searches for key presence
     if root:
         if root.data == a or root.data == b:
             return root
@@ -309,6 +309,34 @@ def lowest_common_ancestor(root, a, b):
             return r
 
     return None
+
+def find_path(root, a, b):
+    def find_path_from_lca(root, a, b, path):
+        if root:
+            if root.data == a or root.data == b:
+                path.append(root)
+                return True
+
+            l = find_path_from_lca(root.left, a, b, path)
+            r = find_path_from_lca(root.right, a, b, path)
+
+            if l:
+                path.append(root)
+                return True
+            elif r:
+                path.append(root)
+                return True
+            else:
+                return False
+        return False
+
+    lca = lowest_common_ancestor(root, a, b)
+    path_one = []
+    path_two = []
+    find_path_from_lca(lca.left, a, b, path_one)
+    find_path_from_lca(lca.right, a, b, path_two)
+    return path_one + [lca] + list(reversed(path_two))
+
 
 
 def test():
@@ -507,5 +535,34 @@ def test_ten():
     print(lca.data)
 
 
+def test_11():
+    data = [11, 6, 19, 4, 8, 17, 43, 3, 5, 7, 10, 16, 18, 31, 49]
+    root = None
+    for d in data:
+        root = insert(root, d)
 
-test_ten()
+    path = find_path(root, 16, 49)
+    print([x.data for x in path])
+
+    path = find_path(root, 10, 49)
+    print([x.data for x in path])
+
+    path = find_path(root, 10, 31)
+    print([x.data for x in path])
+
+    path = find_path(root, 31, 5)
+    print([x.data for x in path])
+
+    path = find_path(root, 18, 5)
+    print([x.data for x in path])
+
+    path = find_path(root,3, 3)
+    print([x.data for x in path])
+
+    path = find_path(root, 10, 16)
+    print([x.data for x in path])
+
+    path = find_path(root, 8, 43)
+    print([x.data for x in path])
+
+test_11()
