@@ -284,6 +284,33 @@ def preorder_predecessor(root, data, d):
 
     return preorder_predecessor_parent(root, None, data, d)
 
+def lowest_common_ancestor_bst(root, a, b):
+    if root:
+        if root.data == a or root.data == b:
+            return root
+        elif search(root.left, a) and search(root.right, b):
+            return root
+        elif search(root.left, a): #lca in left subtree
+            return lowest_common_ancestor_bst(root.left, a, b)
+        else:
+            return lowest_common_ancestor_bst(root.right, a, b)
+
+def lowest_common_ancestor(root, a, b):
+    if root:
+        if root.data == a or root.data == b:
+            return root
+        l = lowest_common_ancestor(root.left, a, b)
+        r = lowest_common_ancestor(root.right, a, b)
+        if l and r:
+            return root
+        if l:
+            return l
+        if r:
+            return r
+
+    return None
+
+
 def test():
     root = None
     data = [11, 6, 19, 4, 8, 17, 43, 3, 5, 7, 10, 16, 18, 31, 49]
@@ -448,4 +475,37 @@ def test_nine():
     print(preorder_predecessor(root, 5, {'found': False}).data)
     print(preorder_predecessor(root, 3, {'found': False}).data)
 
-test_nine()
+def test_ten():
+    d = [11, 6, 19, 4, 8, 17, 43, 3, 5, 7, 10, 16, 18, 31, 49]
+    root = None
+    for v in d:
+        root = insert(root, v)
+
+    lca = lowest_common_ancestor(root, 19, 19)
+    print(lca.data)
+    lca = lowest_common_ancestor(root, 19, 49)
+    print(lca.data)
+    lca = lowest_common_ancestor(root, 17, 49)
+    print(lca.data)
+    lca = lowest_common_ancestor(root, 16, 16)
+    print(lca.data)
+    lca = lowest_common_ancestor(root, 16, 18)
+    print(lca.data)
+    lca = lowest_common_ancestor(root, 5, 18)
+    print(lca.data)
+    lca = lowest_common_ancestor(root, 18, 5)
+    print(lca.data)
+    lca = lowest_common_ancestor(root, 49, 31)
+    print(lca.data)
+    lca = lowest_common_ancestor(root, 49, 16)
+    print(lca.data)
+    lca = lowest_common_ancestor(root, 49, 18)
+    print(lca.data)
+    lca = lowest_common_ancestor(root, 18, 10)
+    print(lca.data)
+    lca = lowest_common_ancestor(root, 10, 18)
+    print(lca.data)
+
+
+
+test_ten()
