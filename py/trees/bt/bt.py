@@ -337,7 +337,58 @@ def find_path(root, a, b):
     find_path_from_lca(lca.right, a, b, path_two)
     return path_one + [lca] + list(reversed(path_two))
 
+def get_right_node_using_preorder(node):  # node is not root and has parent pointer
 
+    """Idea:
+        Have a count = 0 when we find that element
+        increment count while going up the tree levels
+        decrementing it while going down, first time when
+        we see count == 0 we found the first element
+    """
+    def find_right(root, node, d):
+        if root:
+            if 'count' in d and d['count'] == 0:
+                print(root.data)
+                return root
+
+            if root.data == node.data:
+                d['count'] = 0 # start counter
+
+            if 'count' in d:
+                d['count'] -= 1
+            find_right(root.left, node, d)
+            find_right(root.right, node, d)
+
+            if 'count' in d:
+                d['count'] += 1
+
+    root = node
+    while root.parent != None:
+        root = root.parent
+    d = {}
+    return find_right(root, node, d)
+
+def get_right_node_using_bfs(node):  # node is not root and has parent pointer
+    root = node
+    while root.parent != None:
+        root = root.parent
+
+    q = []
+    b = []
+    q.append(root)
+    while len(q) > 0:
+        c = q.pop(0)
+        if c.data == node.data:
+            if len(q) > 0:
+                return q[0].data
+            return None
+
+        if c.left: b.append(c.left)
+        if c.right: b.append(c.right)
+
+        if len(q) == 0:
+            q = b[:]
+            b = []
 
 def test():
     root = None
@@ -565,4 +616,29 @@ def test_11():
     path = find_path(root, 8, 43)
     print([x.data for x in path])
 
-test_11()
+
+def test_12():
+    class Node:
+        def __init__(self, data, parent):
+            self.data = data
+            self.left = None
+            self.right = None
+            self.parent = parent
+
+    root = (4, (2, (1), (3)), (6, (5), (7)))
+
+    root = Node(4, None)
+    root.left = Node(2, root)
+    root.right = Node(6, root)
+
+    root.left.left = Node(1, root.left)
+    root.left.right = Node(3, root.left)
+
+    root.right.left = Node(5, root.right)
+    root.right.right = Node(7, root.right)
+
+    x = root
+    print(get_right_node_using_preorder(x))
+    print(get_right_node_using_bfs(x))
+
+test_12()
