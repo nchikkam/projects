@@ -466,7 +466,7 @@ def connect_tree_non_recursive(root):
         head = None
         while root:
             if root.left:
-                if head == None: head = root.left
+                if head == None: head = root.left  # bfs strategy to just hold the first link 'head' in next level.
                 root.left.next = root.right
                 if root.right:
                     if root.next:
@@ -499,6 +499,7 @@ def connect_tree(root): # recursive
             if root.right:
                 root.left.next = root.right
                 if root.next:
+                    # this loop is for the case where there are internal nodes with no childs
                     temp = root.next
                     while temp and temp.left == None and temp.right == None:
                         temp = temp.next
@@ -527,6 +528,44 @@ def connect_tree(root): # recursive
         connect_tree(root.right) # note, right child first to visit
         connect_tree(root.left)
 
+
+def get_depth(root, data, level):
+    if root == None:
+        return 0
+    if root.data == data:
+        return level
+    l = get_depth(root.left, data, level+1)
+    if l!=0: return l
+    return get_depth(root.right, data, level+1)
+
+def are_siblings(root, a, b):
+    if root and root.left and root.right:
+        if (root.left.data == a and root.right.data == b) or \
+           (root.left.data == b and root.right.data == a):
+            return True
+        l = are_siblings(root.left, a, b)
+        if l: return l
+        return are_siblings(root.right, a, b)
+    return False
+
+
+def check_cousins(root, a, b):
+    """
+        find height of a
+        find height of b
+        if their heights equal, check their parent
+        two nodes are said to be cousins if they are at the same level and both have
+        different parents
+    """
+    level_of_a = get_depth(root, a, 0)
+    level_of_b = get_depth(root, b, 0)
+    return (
+        (level_of_a == level_of_b and not are_siblings(root, a, b))
+    )
+
+
+
+# Test(s)
 def test():
     root = None
     data = [11, 6, 19, 4, 8, 17, 43, 3, 5, 7, 10, 16, 18, 31, 49]
@@ -842,4 +881,57 @@ def test_14():
     print("\n")
     print_level_order_using_pointers(rt)
 
-test_14()
+def test_15():
+    d = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+    root = None
+    for v in d:
+        root = insert(root, v)
+
+    """
+                        10        -----------------level 0
+                      9   11                       level 1
+                    8       12                     level 2
+                   7          13                   level 3
+                 6              14                 level 4
+               5                  15               level 5
+             4                      16             level 6
+           3                          17           level 7
+          2                             18         level 8
+        1                                  19      level 9
+
+    """
+    print(get_depth(root, 18, 0))
+    print(get_depth(root, 1, 0))
+    print(get_depth(root, 6, 0))
+    print(get_depth(root, 10, 0))
+
+
+def test_16():
+    data = [11, 6, 19, 4, 8, 17, 43, 3, 5, 7, 10, 16, 18, 31, 49]
+    root = None
+    for d in data:
+        root = insert(root, d)
+
+    print(are_siblings(root, 16, 18))
+    print(are_siblings(root, 16, 31))
+    print(are_siblings(root, 17, 49))
+    print(are_siblings(root, 43, 19))
+    print(are_siblings(root, 8, 17))
+    print(are_siblings(root, 3, 5))
+    print(are_siblings(root, 4, 8))
+    print(are_siblings(root, 6, 19))
+    print(are_siblings(root, 17, 43))
+    print(are_siblings(root, 31, 49))
+
+def test_17():
+    data = [11, 6, 19, 4, 8, 17, 43, 3, 5, 7, 10, 16, 18, 31, 49]
+    root = None
+    for d in data:
+        root = insert(root, d)
+
+    print(check_cousins(root, 4, 8))
+    print(check_cousins(root, 8, 43))
+    print(check_cousins(root, 8, 17))
+    print(check_cousins(root, 16, 18))
+
+test_17()
