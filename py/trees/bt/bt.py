@@ -51,13 +51,12 @@ def bfs(root):
         if current.right != None:
             q.append(current.right)
 
-def bfs_spiral_order(root):
+def bfs_spiral_order_using_queues(root):
     """
         +------------< 11 <------------< START
         +-----> 6               19 >------------------+
     +------<4       8       17        43   <----------+
     +--->3     5   7  10   16   18   31   49 ->END
-
     """
     pq = [root]
     cq = []
@@ -76,9 +75,54 @@ def bfs_spiral_order(root):
             toprint = [str(x.data) for x in pq]
 
             if flag==1:
-                print("".join(toprint))
+                print(" ".join(toprint))
             else:
-                print("".join(reversed(toprint)))
+                print(" ".join(reversed(toprint)))
+
+def print_spiral_order_using_stacks(root):
+    stk_one = []
+    stk_two = []
+    stk_one.append(root)
+    while len(stk_one) > 0 or len(stk_two) > 0:
+        print("\n")
+        while len(stk_one) > 0:
+            c = stk_one.pop()
+            print("{} ".format(c.data), end='')
+            if c.right:
+                stk_two.append(c.right)
+            if c.left:
+                stk_two.append(c.left)
+        print("\n")
+        while len(stk_two) > 0:
+            c = stk_two.pop()
+            print("{} ".format(c.data), end='')
+            if c.left:
+                stk_one.append(c.left)
+            if c.right:
+                stk_one.append(c.right)
+
+def print_spiral_order_using_recursion(root):
+
+    def print_level(root, level, flag):
+        if root == None:
+            return
+        if level == 1:
+            print("{} ".format(root.data), end='')
+        else:
+            if flag:  # left to right
+                print_level(root.left, level-1, flag)
+                print_level(root.right, level - 1, flag)
+            else:     # right to left
+                print_level(root.right, level - 1, flag)
+                print_level(root.left, level - 1, flag)
+
+    h = height(root)
+    flag = True
+    for i in list(range(h+1)):
+        print_level(root, i, flag)
+        flag = not flag
+        print("\n")
+
 
 def count_leaves(root):
     if root:
@@ -981,4 +1025,17 @@ def test_17():
     print(check_cousins_using_bfs(root, 16, 18))
     print(check_cousins_using_bfs(root, 5, 49))
 
-test_17()
+def test_18():
+    data = [11, 6, 19, 4, 8, 17, 43, 3, 5, 7, 10, 16, 18, 31, 49]
+    root = None
+    for d in data:
+        root = insert(root, d)
+
+    bfs_spiral_order_using_queues(root)
+    print("\n")
+    print_spiral_order_using_stacks(root)
+    print("\n")
+    print_spiral_order_using_recursion(root)
+
+
+test_18()
