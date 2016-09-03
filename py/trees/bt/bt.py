@@ -560,8 +560,47 @@ def check_cousins(root, a, b):
     level_of_a = get_depth(root, a, 0)
     level_of_b = get_depth(root, b, 0)
     return (
-        (level_of_a == level_of_b and not are_siblings(root, a, b))
+        (level_of_a == level_of_b and are_siblings(root, a, b)==False)
     )
+
+def check_cousins_using_bfs(root, a, b):
+    q = []
+    bp = []
+    q.append(root)
+
+    while len(q) > 0:
+        c = q.pop(0)
+        if c.left and c.right:
+            bp.append(c.left)
+            bp.append(c.right)
+            if (c.left.data == a and c.right.data == b) or \
+                (c.left.data == b and c.right.data == a):
+                return False # they have same parent, can't be cousins
+        elif c.left:
+            bp.append(c.left)
+        elif c.left:
+            bp.append(c.right)
+
+        if len(q) == 0: # one level finished
+            flag_a_found = False
+            flag_b_found = False
+            for v in bp:
+                if v.data == a: flag_a_found = True
+                if v.data == b: flag_b_found = True
+
+            if flag_a_found and flag_b_found:
+                return True
+            q = bp[:]
+            bp = []
+
+    return False
+
+
+
+
+    return False
+
+
 
 
 
@@ -933,5 +972,13 @@ def test_17():
     print(check_cousins(root, 8, 43))
     print(check_cousins(root, 8, 17))
     print(check_cousins(root, 16, 18))
+    print(check_cousins(root, 5, 49))
+
+    print("\n")
+    print(check_cousins_using_bfs(root, 4, 8))
+    print(check_cousins_using_bfs(root, 8, 43))
+    print(check_cousins_using_bfs(root, 8, 17))
+    print(check_cousins_using_bfs(root, 16, 18))
+    print(check_cousins_using_bfs(root, 5, 49))
 
 test_17()
