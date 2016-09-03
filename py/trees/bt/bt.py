@@ -407,6 +407,37 @@ def print_nodes_at_level(root, level):
         print_nodes_at_level(root.right, level-1)
 
 
+def connect_tree(root):
+    # this is plane preorder with updation of root.next.*, left.next and right.next
+    if root:
+        if root.left:
+            root.left.next = root.right
+            if root.right:
+                if root.next:
+                    if root.next.left:
+                        root.right.next = root.next.left
+                    else:
+                        root.right.next = root.next.right
+            else:
+                if root.next:
+                    if root.next.left:
+                        root.left.next = root.next.left
+                    else:
+                        root.left.next = root.next.right
+        else: # left child is None
+            if root.right:
+                if root.next:   # same as above if case inside right exists
+                    if root.next.left:
+                        root.right.next = root.next.left
+                    else:
+                        root.right.next = root.next.right
+
+        connect_tree(root.left)
+        connect_tree(root.right)
+
+
+
+
 def test():
     root = None
     data = [11, 6, 19, 4, 8, 17, 43, 3, 5, 7, 10, 16, 18, 31, 49]
@@ -679,5 +710,68 @@ def test_13():
     print("\n")
     print_nodes_at_level(root, 5)
 
+def test_14():
+    class CNode: # Custom node definition
+        def __init__(self, data):
+            self.data = data
+            self.left = self.right = self.next = None
 
-test_13()
+    fmt = (
+        11,
+            (6,
+                (4,
+                    3,
+                    5
+                 ),
+                (8,
+                    None,
+                    10
+                 )
+             ),
+            (19,
+                (17,
+                    16,
+                    18
+                 ),
+                (43,
+                    31,
+                    49
+                 )
+             )
+    )
+
+    def create(t):
+        if t:
+            if type(t) is tuple:
+                r = CNode(t[0])
+                r.left = create(t[1])
+                r.right = create(t[2])
+                return r
+            else:
+                return CNode(t)
+
+    def print_level_order_using_pointers(root):
+        nxt = root
+        d = None
+        while nxt:
+            while nxt:
+                print("{} ".format(nxt.data), end='')
+                if d == None:
+                    if nxt.left:
+                        d = nxt.left  # next level head
+                    else:
+                        d = nxt.right
+                nxt = nxt.next
+            nxt = d
+            d = None
+
+
+    r = create(fmt)
+    inorder(r)
+    connect_tree(r)
+    print("\n")
+    print_level_order_using_pointers(r)
+
+
+
+test_14()
