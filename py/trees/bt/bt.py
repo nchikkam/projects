@@ -51,6 +51,13 @@ def bfs(root):
         if current.right != None:
             q.append(current.right)
 
+def bfs_recursion(root):
+    h = height(root)
+    for i in list(range(h+1)):
+        print_nodes_at_level(root, i)
+        print("\n")
+
+
 def bfs_spiral_order_using_queues(root):
     """
         +------------< 11 <------------< START
@@ -644,8 +651,24 @@ def check_cousins_using_bfs(root, a, b):
 
     return False
 
+def delete_leaves(root):
+    if root:
+        if root.left == None and root.right == None:
+            return None
+        root.left = delete_leaves(root.left)
+        root.right = delete_leaves(root.right)
 
+        return root
 
+def is_same_tree(root_one, root_two):
+    if root_one == None and root_two == None:
+        return True
+    elif root_one == None or root_two == None:
+        return False
+    else:
+        return  root_one.data == root_two.data and \
+                is_same_tree(root_one.left, root_two.left) and \
+                is_same_tree(root_one.right, root_two.right)
 
 
 # Test(s)
@@ -1037,5 +1060,34 @@ def test_18():
     print("\n")
     print_spiral_order_using_recursion(root)
 
+def test_19():
+    data = [11, 6, 19, 4, 8, 17, 43, 3, 5, 7, 10, 16, 18, 31, 49]
+    root = None
+    for d in data:
+        root = insert(root, d)
 
-test_18()
+    bfs_recursion(root)
+
+def test_20():
+    data = [11, 6, 19, 4, 8, 17, 43, 3, 5, 7, 10, 16, 18, 31, 49]
+    root = None
+    for d in data:
+        root = insert(root, d)
+
+    delete_leaves(root)
+    inorder(root)
+
+def test_21():
+    data = [11, 6, 19, 4, 8, 17, 43, 3, 5, 7, 10, 16, 18, 31, 49]
+    root = None
+    for d in data:
+        root = insert(root, d)
+
+    data = [11, 6, 19, 4, 8, 17, 43, 3, 5, 7, 10, 16, 18]
+    another = None
+    for d in data:
+        another = insert(another, d)
+        
+    print(is_same_tree(root, another))
+
+test_21()
