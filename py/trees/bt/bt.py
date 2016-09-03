@@ -3,6 +3,13 @@ class Node:
         self.data = data
         self.left = self.right = None
 
+
+class CNode:  # Custom node definition
+    def __init__(self, data):
+        self.data = data
+        self.left = self.right = self.next = None
+
+
 def insert(root, data):
     if root == None:
         return Node(data)
@@ -38,7 +45,7 @@ def bfs(root):
     q = [root]
     while len(q) != 0:
         current = q.pop(0)
-        print( current.data)
+        print("{} ".format(current.data), end='')
         if current.left != None:
             q.append(current.left)
         if current.right != None:
@@ -406,37 +413,119 @@ def print_nodes_at_level(root, level):
         print_nodes_at_level(root.left, level-1)
         print_nodes_at_level(root.right, level-1)
 
-
-def connect_tree(root):
-    # this is plane preorder with updation of root.next.*, left.next and right.next
+def print_braces_format(root):
     if root:
-        if root.left:
-            root.left.next = root.right
+        if root.left == None and root.right == None:
+            print("{},".format(root.data), end='')
+            return
+        print("({},".format(root.data), end='')
+        print_braces_format(root.left)
+        print_braces_format(root.right)
+        print("),", end='')
+
+def get_parenthesis_representation(root):
+    if root:
+        r = [root.data]
+        if root.left == None and root.right == None:
+            return root.data
+        r.append(get_parenthesis_representation(root.left))
+        r.append(get_parenthesis_representation(root.right))
+        return tuple(r)
+
+def create_from_parenthesis(fmt):
+    if fmt:
+        if type(fmt) is tuple:
+            r = CNode(fmt[0])
+            r.left = create_from_parenthesis(fmt[1])
+            r.right = create_from_parenthesis(fmt[2])
+            return r
+        else:
+            return CNode(fmt)
+
+def print_level_order_using_pointers(root):
+    # Careful this expects a next pointer in each Node
+    # look for CNode's Definition in this file
+    nxt = root
+    d = None
+    while nxt:
+        while nxt:
+            print("{} ".format(nxt.data), end='')
+            if d == None:
+                if nxt.left:
+                    d = nxt.left  # next level head
+                else:
+                    d = nxt.right
+            nxt = nxt.next
+        nxt = d
+        d = None
+
+
+
+def connect_tree_non_recursive(root):
+    while root:
+        head = None
+        while root:
+            if root.left:
+                if head == None: head = root.left
+                root.left.next = root.right
+                if root.right:
+                    if root.next:
+                        if root.next.left:
+                            root.right.next = root.next.left
+                        else:
+                            root.right.next = root.next.right
+                else:
+                    if root.next:
+                        if root.next.left:
+                            root.left.next = root.next.left
+                        else:
+                            root.left.next = root.next.right
+
             if root.right:
-                if root.next:
+                if head == None: head = root.right
+                if root.next:   # same as above if case inside right exists
                     if root.next.left:
                         root.right.next = root.next.left
                     else:
                         root.right.next = root.next.right
+            root = root.next
+
+        root = head
+
+def connect_tree(root): # recursive
+    # this is slight modification of postorder with updation of root.next.*, left.next and right.next
+    if root:
+        if root.left:
+            if root.right:
+                root.left.next = root.right
+                if root.next:
+                    temp = root.next
+                    while temp and temp.left == None and temp.right == None:
+                        temp = temp.next
+
+                    if temp and temp.left:
+                        root.right.next = temp.left
+                    elif temp and temp.right:
+                        root.right.next = temp.right
             else:
                 if root.next:
-                    if root.next.left:
-                        root.left.next = root.next.left
-                    else:
-                        root.left.next = root.next.right
-        else: # left child is None
-            if root.right:
+                    temp = root.next
+                    while temp and temp.left == None and temp.right == None:
+                        temp = temp.next
+
+                    if temp and temp.left:
+                        root.left.next = temp.left
+                    elif temp and temp.right:
+                        root.left.next = temp.right
+        if root.right:
                 if root.next:   # same as above if case inside right exists
                     if root.next.left:
                         root.right.next = root.next.left
                     else:
                         root.right.next = root.next.right
 
+        connect_tree(root.right) # note, right child first to visit
         connect_tree(root.left)
-        connect_tree(root.right)
-
-
-
 
 def test():
     root = None
@@ -711,67 +800,46 @@ def test_13():
     print_nodes_at_level(root, 5)
 
 def test_14():
-    class CNode: # Custom node definition
-        def __init__(self, data):
-            self.data = data
-            self.left = self.right = self.next = None
+    data = [11, 6, 19, 4, 8, 17, 43, 3, 5, 7, 10, 16, 18, 31, 49]
+    root = None
+    for d in data:
+        root = insert(root, d)
+    d = get_parenthesis_representation(root)
+    print(d)
 
-    fmt = (
-        11,
-            (6,
-                (4,
-                    3,
-                    5
-                 ),
-                (8,
-                    None,
-                    10
-                 )
-             ),
-            (19,
-                (17,
-                    16,
-                    18
-                 ),
-                (43,
-                    31,
-                    49
-                 )
-             )
-    )
+    rt = create_from_parenthesis(d)
+    print("\ninorder:", end='')
+    inorder(rt)
+    connect_tree(rt)
+    print("\nLevel order using queue:        ", end='')
+    bfs(rt)
+    print("\nLevel order using next pointers:", end='')
+    print_level_order_using_pointers(rt)
 
-    def create(t):
-        if t:
-            if type(t) is tuple:
-                r = CNode(t[0])
-                r.left = create(t[1])
-                r.right = create(t[2])
-                return r
-            else:
-                return CNode(t)
-
-    def print_level_order_using_pointers(root):
-        nxt = root
-        d = None
-        while nxt:
-            while nxt:
-                print("{} ".format(nxt.data), end='')
-                if d == None:
-                    if nxt.left:
-                        d = nxt.left  # next level head
-                    else:
-                        d = nxt.right
-                nxt = nxt.next
-            nxt = d
-            d = None
-
-
-    r = create(fmt)
-    inorder(r)
-    connect_tree(r)
+    print("\nusing non recursive version")
+    rt = create_from_parenthesis(d)
+    connect_tree_non_recursive(rt)
+    print("Level order using queue:        ", end='')
+    bfs(rt)
+    print("\nLevel order using next pointers:", end='')
+    print_level_order_using_pointers(rt)
     print("\n")
-    print_level_order_using_pointers(r)
 
 
+    d = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+    root = None
+    for v in d:
+        root = insert(root, v)
+    d = get_parenthesis_representation(root)
+    rt = create_from_parenthesis(d)
+    bfs(rt)
+    connect_tree_non_recursive(rt)
+    print("\n")
+    print_level_order_using_pointers(rt)
+
+    rt = create_from_parenthesis(d)
+    connect_tree(rt)
+    print("\n")
+    print_level_order_using_pointers(rt)
 
 test_14()
