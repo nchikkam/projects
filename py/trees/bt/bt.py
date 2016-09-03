@@ -390,6 +390,23 @@ def get_right_node_using_bfs(node):  # node is not root and has parent pointer
             q = b[:]
             b = []
 
+def get_range(root, start, end): # works for both BT & BST
+    if root:
+        get_range(root.left, start, end)
+        if root.data >= start and root.data <= end:
+            print("{} ".format(root.data), end='')
+        get_range(root.right, start, end)
+
+
+def print_nodes_at_level(root, level):
+    if root:
+        if level == 1:
+            print("{} ".format(root.data), end='')
+
+        print_nodes_at_level(root.left, level-1)
+        print_nodes_at_level(root.right, level-1)
+
+
 def test():
     root = None
     data = [11, 6, 19, 4, 8, 17, 43, 3, 5, 7, 10, 16, 18, 31, 49]
@@ -641,4 +658,26 @@ def test_12():
     print(get_right_node_using_preorder(x))
     print(get_right_node_using_bfs(x))
 
-test_12()
+def test_13():
+    data = [11, 6, 19, 4, 8, 17, 43, 3, 5, 7, 10, 16, 18, 31, 49, 65, 39]
+    root = None
+    for d in data:
+        root = insert(root, d)
+
+    get_range(root, 10, 18)
+    print("\n")
+    get_range(root, 10, 43)
+
+    print("\n")
+    print_nodes_at_level(root, 1)
+    print("\n")
+    print_nodes_at_level(root, 2)
+    print("\n")
+    print_nodes_at_level(root, 3)
+    print("\n")
+    print_nodes_at_level(root, 4)
+    print("\n")
+    print_nodes_at_level(root, 5)
+
+
+test_13()
