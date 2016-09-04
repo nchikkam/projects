@@ -908,7 +908,19 @@ def diameter_with_bfs(root):
     return dist
 
 
+def sum_left_and_right_subtrees(root):
+    """
+    Replace each node with sum of values in left and right subtree.
+    leaf nodes value will be changed to 0
+    """
+    if root:
+        old_value = root.data
+        new_value = sum_left_and_right_subtrees(root.left) + \
+                    sum_left_and_right_subtrees(root.right)
+        root.data = new_value
+        return old_value + new_value
 
+    return 0
 
 
 
@@ -1506,4 +1518,16 @@ def test_29():
         root = cinsert(root, d)
     print(diameter_with_bfs(root))
 
-test_29()
+def test_30():
+    l = [11, 6, 19, 4, 8, 17, 43, 3, 5, 7, 10, 16, 18, 31, 49]
+    root = None
+    for d in l:
+        root = insert(root, d)
+
+    inorder(root)
+    print("\n")
+    print(sum_left_and_right_subtrees(root))
+    print("\n")
+    inorder(root)
+
+test_30()
