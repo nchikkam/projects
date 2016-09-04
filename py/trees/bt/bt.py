@@ -233,6 +233,32 @@ def to_doubly_linked_list(root):
 
     return head
 
+def to_doubly_linked_list_sol2(root):
+    if root:
+        l = to_doubly_linked_list_sol2(root.left)
+        r = to_doubly_linked_list_sol2(root.right)
+
+        if l == None and r == None:
+            return root
+
+        if l != None:
+            t = l
+            while t.right:
+                t = t.right
+            t.right = root
+            root.left =t
+
+        if r != None:
+            t = r
+            while t.left:
+                t = t.left
+            t.left = root
+            root.right = t
+
+        while root.left:
+            root = root.left
+        return root
+
 def print_dll(dll):
     while dll:
         print("{} ".format(dll.data), end='')
@@ -580,7 +606,7 @@ def connect_tree(root): # recursive
         connect_tree(root.left)
 
 
-def get_depth(root, data, level):
+def get_depth(root, data, level): # or get_level
     if root == None:
         return 0
     if root.data == data:
@@ -598,7 +624,6 @@ def are_siblings(root, a, b):
         if l: return l
         return are_siblings(root.right, a, b)
     return False
-
 
 def check_cousins(root, a, b):
     """
@@ -643,11 +668,6 @@ def check_cousins_using_bfs(root, a, b):
                 return True
             q = bp[:]
             bp = []
-
-    return False
-
-
-
 
     return False
 
@@ -721,12 +741,171 @@ def convert_sorted_llist_to_bt_O_N(llist):
     return root
 
 
+def is_avl_tree(root):
+    # avl tree is a binary tree with below condition
+    # for every node, abs(height (left) - height(right)) <= 1
+    if root:
+        return \
+            is_avl_tree(root.left) and is_avl_tree(root.right) and \
+            abs(height(root.left)-height(root.right)) <= 1
+    return True
 
 
+def root_to_leaf_path_sum(root, sum):
+    if sum == 0:
+        return True
+    if root:
+        l = root_to_leaf_path_sum(root.left, sum-root.data)
+        if l: return True
+
+        r = root_to_leaf_path_sum(root.right, sum-root.data)
+        if r: return True
+
+        return False
+    return False
+
+def mirror_image(root):
+    if root:
+        mirror_image(root.left)
+        mirror_image(root.right)
+
+        temp = root.left
+        root.left = root.right
+        root.right = temp
+
+def is_sub_tree(t1, t2):  # checks T2 is sub tree of T1
+    if t2 == None:
+        return True
+    if t1 == None:
+        return False
+    if is_same_tree(t1, t2):
+        return True
+
+    return is_sub_tree(t1.left, t1) or is_sub_tree(t1.right, t2)
+
+def get_difference_sumof_all_odd_and_even_levels(root):
+    if root:
+        return \
+            root.data - \
+            get_difference_sumof_all_odd_and_even_levels(root.left) - \
+            get_difference_sumof_all_odd_and_even_levels(root.right)
+    return 0
 
 
+def print_all_paths(root):
+
+    def paths(root, path):
+        if root:
+            p = path + [root.data]
+            if root.left == None and root.right == None:
+                print(p)
+                return
+            paths(root.left, p)
+            paths(root.right, p)
+
+    path = []
+    paths(root, path)
 
 
+def diameter_O_N_2(root):
+    if root:
+        lh = height(root.left)
+        rh = height(root.right)
+
+        cd = lh + rh + 1
+        ld = diameter_O_N_2(root.left)
+        rd = diameter_O_N_2(root.right)
+
+        return max(cd, ld, rd)
+    return 0
+
+def diameter_O_N(root): # finds the height at the same time
+    # O(N) but O(N) space as it keeps 4 varaibles on stack
+    # for every recursive call.
+    def diameter(root, height):
+        #http://www.crazyforcode.com/diameter-tree/
+        lh = {'v': 0}
+        rh = {'v': 0}
+        ld = {'v': 0}
+        rd = {'v': 0}
+
+        if root == None:
+            height['v'] = 0
+            return 0
+
+        ld['v'] = diameter(root.left, lh)
+        rd['v'] = diameter(root.right, rh)
+
+        height['v'] = max(lh['v'], rh['v']) + 1
+
+        return max(lh['v']+rh['v']+1, ld['v'], rd['v'])
+
+    height = {'v': 0}
+    return diameter(root, height)
+
+def diameter_with_bfs(root):
+    # idea comes from Do exercise 22.2-7 on page 539 of CLRS
+    """
+        Run BFS on any node S in the graph, remembering the node U discovered last.
+        Run BFS from U remembering the node V discovered last.
+        D(U, V) is the diameter of the Graph
+        links:
+        http://techieme.in/tree-diameter/
+        # traverse post order and update the node heights and their max
+        # distance betweeen leaf nodes.
+        Steps to solve
+        1) Initialize all the leaves with leftHeight and rightHeight as 1.
+        2) Initialize all the leaves with maxDistance as 0, we make it a point that if either of the leftHeight or rightHeight is 1 we make the maxDistance = 0
+        3) Move upward one at a time and calculate the values for the immediate parent. It would be easy because now we know these values for the children.
+        4) At a given node,
+        a) assign leftHeight as maximum of (leftHeight or rightHeight of its left child).
+        b) assign the rightHeight as maximum of (leftHeight or rightHeight of its right child).
+        c) if any of these values (leftHeight or rightHeight) is 1 make the maxDistance as zero.
+        d) if both the values are greater than zero make the maxDistance as leftHeight + rightHeight – 1
+        5) Maintain the maxDistance in a temp variable and if in step 4 the maxDistance is more than the current value of the variable, replace it with the new maxDistance value.
+        6) At the end of the algorithm the value in maxDistance is the diameter.
+    """
+    s = []
+    o = []
+    dist = 0
+
+    # insert nodes in dfs order so that it ends up having childs to pop
+    # first than internal nodes.
+    s.append(root)
+    while len(s) > 0:
+        c = s.pop()
+        o.append(c)
+
+        if c.left:
+            s.append(c.left)
+        if c.right:
+            s.append(c.right)
+
+    print([x.data for x in o])
+    while len(o) > 0:
+        c = o.pop()
+        #print(c.data)
+        one = False
+        if c.left == None:
+            c.left_height = 1
+            one = True
+        else:
+            c.left_height = max(c.left.left_height, c.left.right_height) + 1
+
+        if c.right == None:
+            c.right_height = 1
+            one = True
+        else:
+            c.right_height = max(c.right.right_height, c.right.left_height) + 1
+
+        if one:
+            # we can set max distance possible from c to 0
+            pass
+        else:
+            temp = c.left_height + c.right_height - 1
+            if dist < temp:
+                dist = temp
+    return dist
 
 
 
@@ -822,6 +1001,19 @@ def test_four():
     print("\n")
     dll = to_doubly_linked_list(root)
     print_dll(dll)
+
+    data = [5, 3, 7, 1, 4, 6, 9]
+    root = None
+    for d in data:
+        root = insert(root, d)
+
+    print("\n")
+    inorder(root)
+    print("\n")
+    ll = to_doubly_linked_list_sol2(root)
+    print_dll(ll)
+
+
 
 def test_five():
     data = [11, 6, 19, 4, 8, 17, 43, 3, 5, 7, 10, 16, 18, 31, 49]
@@ -1187,5 +1379,131 @@ def test_22():
 
     bfs_spiral_order_using_queues(r)
 
+def test_23():
+    l = [5, 3, 7, 1, 4, 6, 9]
+    root = None
+    for d in l:
+        root = insert(root, d)
+    print(is_avl_tree(root))
 
-test_22()
+    delete(root, 6)
+    print(is_avl_tree(root))
+
+    delete(root, 9)
+    print(is_avl_tree(root))
+
+    delete(root, 7)
+    print(is_avl_tree(root))
+
+def test_24():
+    l = [5, 3, 7, 1, 4, 6, 9]
+    root = None
+    for d in l:
+        root = insert(root, d)
+
+    print(root_to_leaf_path_sum(root, 21))
+    print(root_to_leaf_path_sum(root, 18))
+    print(root_to_leaf_path_sum(root, 12))
+    print(root_to_leaf_path_sum(root, 8))
+    print(root_to_leaf_path_sum(root, 38))
+    print(root_to_leaf_path_sum(root, 3))
+
+def test_25():
+    l = [5, 3, 7, 1, 4, 6, 9]
+    root = None
+    for d in l:
+        root = insert(root, d)
+
+    inorder(root)
+    mirror_image(root)
+    print("\n")
+    inorder(root)
+
+def test_26():
+    l = [5, 3, 7, 1, 4, 6, 9]
+    t1 = None
+    for d in l:
+        t1 = insert(t1, d)
+    inorder(t1)
+
+    l = [7, 6, 9]
+    t2 = None
+    for d in l:
+        t2 = insert(t2, d)
+    inorder(t2)
+    print("\n")
+    print(is_sub_tree(t1, t2))
+
+
+def test_27():
+    l = [5, 3, 7, 1, 4, 6, 9]
+    root = None
+    for d in l:
+        root = insert(root, d)
+
+    print(get_difference_sumof_all_odd_and_even_levels(root))
+
+    l = [11, 6, 19, 4, 8, 17, 43, 3, 5, 7, 10, 16, 18, 31, 49]
+    root = None
+    for d in l:
+        root = insert(root, d)
+    bfs_spiral_order_using_queues(root)
+    print(get_difference_sumof_all_odd_and_even_levels(root))
+
+
+def test_28():
+    l = [11, 6, 19, 4, 8, 17, 43, 3, 5, 7, 10, 16, 18, 31, 49]
+    root = None
+    for d in l:
+        root = insert(root, d)
+
+    print_all_paths(root)
+
+def test_29():
+    l = [11, 6, 19, 4, 8, 17, 43, 3, 5, 7, 10, 16, 18, 31, 49]
+    root = None
+    for d in l:
+        root = insert(root, d)
+
+    print(diameter_O_N_2(root)) # 7
+
+    l = [8, 3, 9, 2, 5, 10, 4, 6, 24, 16, 50, 12, 18]
+    root = None
+    for d in l:
+        root = insert(root, d)
+
+    print(diameter_O_N_2(root))  # 9
+
+    l = [16, 8, 20, 3, 9, 46, 2, 7, 12, 5, 10, 14, 4, 6, 10, 15]
+    root = None
+    for d in l:
+        root = insert(root, d)
+    print(diameter_O_N_2(root))  # 9
+
+    print('Diameter: ')
+    print(diameter_O_N(root))  # 9
+
+    l = [16, 8, 20, 3, 9, 46, 2, 7, 12, 5, 10, 14, 4, 6, 10, 15]
+    class ExtenedNode:
+        def __init__(self, data):
+            self.data = data
+            self.left = self.right = None
+            self.left_height = None
+            self.right_height = None
+
+    def cinsert(root, data):
+        if root == None:
+            return ExtenedNode(data)
+        if data < root.data:
+            root.left = cinsert(root.left, data)
+        elif data > root.data:
+            root.right = cinsert(root.right, data)
+        # we dont insert duplicates
+        return root
+
+    root = None
+    for d in l:
+        root = cinsert(root, d)
+    print(diameter_with_bfs(root))
+
+test_29()
