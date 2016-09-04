@@ -922,7 +922,31 @@ def sum_left_and_right_subtrees(root):
 
     return 0
 
+def check_children_sum_property(root):
+    """each node sum of its left and right children should be equal to node value"""
+    if root:
+        if root.left == None and root.right == None:
+            return True
 
+        left_sum = 0
+        right_sum = 0
+
+        if root.left:
+            left_sum = root.left.data
+
+        if root.right:
+            right_sum = root.right.data
+
+        if root.data != (left_sum + right_sum):
+            return False
+
+        if not check_children_sum_property(root.left) or \
+            not check_children_sum_property(root.right):
+            return False
+        return True
+
+
+    return True
 
 
 
@@ -1530,4 +1554,14 @@ def test_30():
     print("\n")
     inorder(root)
 
-test_30()
+def test_31():
+    l = [37]
+    root = None
+    for d in l:
+        root = insert(root, d)
+
+    inorder(root)
+    print("\n")
+    print(check_children_sum_property(root))
+
+test_31()
