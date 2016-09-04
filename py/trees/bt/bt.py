@@ -670,6 +670,74 @@ def is_same_tree(root_one, root_two):
                 is_same_tree(root_one.left, root_two.left) and \
                 is_same_tree(root_one.right, root_two.right)
 
+def convert_sorted_llist_to_bt_O_NlogN(llist):
+
+    def create_O_NlogN(head, start, end):
+        if start >= end:
+            return None
+        mid = (start + end)//2
+        print(start, mid, end)
+        i=start
+        t = head
+        while i < mid and t.next != None:
+            t = t.next
+            i += 1
+
+        root = Node(t.data)
+        root.left = create_O_NlogN(head, start, mid)
+        root.right = create_O_NlogN(t.next, mid+1, end) # key is .next and mid+1
+        return root
+
+    count = 0
+    t = llist
+    while t:
+        count += 1
+        t = t.next
+
+    root = create_O_NlogN(llist, 0, count)
+    return root
+
+def convert_sorted_llist_to_bt_O_N(llist):
+
+    def create_O_N(d, n):  # beauty !
+        if n <= 0: return None
+        left = create_O_N(d, n//2)
+
+        root = Node(d['head'].data)
+        root.left = left
+        d['head'] = d['head'].next
+
+        root.right = create_O_N(d, (n-(n//2)-1))
+        return root
+
+    count = 0
+    t = llist
+    while t:
+        count += 1
+        t = t.next
+
+    d = {'head': llist}
+    root = create_O_N(d, count)
+    return root
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Test(s)
 def test():
@@ -1087,7 +1155,37 @@ def test_21():
     another = None
     for d in data:
         another = insert(another, d)
-        
+
     print(is_same_tree(root, another))
 
-test_21()
+
+def test_22():
+    class LNode:
+        def __init__(self, data):
+            self.data = data
+            self.next = None
+
+    l = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+    l1 = [1, 2, 3, 4, 5]
+
+    head = None
+    for i in l[::-1]:
+        t = LNode(i)
+        t.next = head
+        head = t
+
+    root = convert_sorted_llist_to_bt_O_NlogN(head)
+    inorder(root)
+    print("\n")
+    print(height(root))
+    bfs_spiral_order_using_queues(root)
+
+
+    r = convert_sorted_llist_to_bt_O_N(head)
+    inorder(r)
+    print("\nHeight:", height(r))
+
+    bfs_spiral_order_using_queues(r)
+
+
+test_22()
