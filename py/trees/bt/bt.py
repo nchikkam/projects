@@ -993,10 +993,43 @@ def check_children_sum_property(root):
     return True
 
 
+def ancestors(root, x):
+    if root:
+        if root.data == x:
+            return True
+        if (ancestors(root.left, x) or ancestors(root.right, x)):
+            print(root.data)
+            return True  # notify to its parent
 
+    return False
 
+def is_bst(root):
+    def isbst(root, _min, _max):
+        if root == None:
+            return True
+        if root.data < _min or root.data > _max:
+            return False
+        return (isbst(root.left, _min, root.data-1) and \
+                isbst(root.right, root.data+1, _max))
 
+    return isbst(root, (2**6) * -1, 2**6)
 
+def is_bst_using_inorder_and_prev_visited_value(root):
+    def bst(root, d):
+        if root:
+            if not bst(root.left, d):
+                return False
+
+            if 'prev' not in d:
+                d['prev'] = root.data
+            elif root.data <= d['prev']:
+                return False
+
+            d['prev'] = root.data
+
+            return bst(root.right, d)
+        return True
+    return bst(root, {})
 
 # Test(s)
 def test():
@@ -1661,4 +1694,31 @@ def test_33():
     print(inorder_successor(root, 4).data)  # 6
     print(inorder_successor_bt(root, 4).data)  # 6
 
-test_33()
+def test_34():
+    d = [6, 1, 8, 3, 2, 4]
+    root = None
+    for v in d:
+        root = insert(root, v)
+
+    ancestors(root, 4)
+    ancestors(root, 1)
+
+def test_35():
+    d = [6, 1, 8, 3, 2, 4]
+    root = None
+    for v in d:
+        root = insert(root, v)
+
+    print(is_bst(root))
+    print("\n")
+    print(is_bst_using_inorder_and_prev_visited_value(root))
+
+    root = create_from_parenthesis((3, 1, 2))
+    inorder(root)
+    print("\n")
+    print(is_bst(root))
+    print("\n")
+    print(is_bst_using_inorder_and_prev_visited_value(root))
+
+
+test_35()
