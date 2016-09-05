@@ -319,6 +319,50 @@ def inorder_predecessor(root, x):
             root = root.left
     return pred
 
+def inorder_predecessor_bt(root, x):
+    if root == None: return None
+    if root.data == x:
+        if root.left:
+            return find_right_most(root.left)
+        return None
+
+    l = inorder_predecessor_bt(root.left, x)
+    if l: return l
+    # check if x is left most in root's right
+    if root.right:
+        h = find_left_most(root.right)
+        if h.data == x:
+            return root
+        else:
+            return inorder_predecessor_bt(root.right, x)
+    else:
+        return None
+
+def inorder_successor_bt(root, x):
+    if root == None: return None
+    if root.data == x:
+        if root.right:
+            return find_left_most(root.right)
+        return None
+
+    r = inorder_successor_bt(root.right, x)
+    if r:
+        return r
+
+    # check if x is right most in root's left
+    if root.left:
+        h = find_right_most(root.left)
+        if h.data == x:
+            return root
+        else:
+            return inorder_successor_bt(root.left, x)
+    else:
+        return None
+
+
+
+
+
 def preorder_sccessor(root, data, d):
    if root:
        if data==root.data:
@@ -1095,6 +1139,8 @@ def test_seven():
     print(inorder_predecessor(root, 4).data)
 
 
+
+
 def test_eight():
     data = [11, 6, 19, 4, 8, 17, 43, 3, 5, 7, 10, 16, 18, 31, 49]
     root = None
@@ -1564,4 +1610,55 @@ def test_31():
     print("\n")
     print(check_children_sum_property(root))
 
-test_31()
+def test_32():
+    d = [5, 3, 8, 2, 4, 7]
+    root = None
+    for v in d:
+        root = insert(root, v)
+
+    #print(inorder_predecessor(root, 2).data)  # None
+    print(inorder_predecessor(root, 4).data)  # 3
+    print(inorder_predecessor(root, 3).data)  # 2
+    print(inorder_predecessor(root, 7).data)  # 5
+    print(inorder_predecessor(root, 8).data)  # 7
+
+    #print(inorder_predecessor_bt(root, 2).data)  # None
+    print(inorder_predecessor_bt(root, 4).data)  # 3
+    print(inorder_predecessor_bt(root, 3).data)  # 2
+    print(inorder_predecessor_bt(root, 7).data)  # 5
+    print(inorder_predecessor_bt(root, 8).data)  # 7
+
+    d = [5, 3, 8, 2, 4, 9, 10, 12, 11]
+    root = None
+    for v in d:
+        root = insert(root, v)
+    print(inorder_predecessor(root, 11).data)  # 10
+    print(inorder_predecessor_bt(root, 11).data)  # 10
+
+def test_33():
+    d = [5, 3, 8, 2, 4, 7]
+    root = None
+    for v in d:
+        root = insert(root, v)
+
+    print(inorder_successor(root, 4).data)  # 5
+    print(inorder_successor(root, 3).data)  # 5
+    print(inorder_successor(root, 2).data)  # 3
+    print(inorder_successor(root, 5).data)  # 7
+    #print(inorder_successor(root, 8).data)  # None
+
+    print(inorder_successor_bt(root, 4).data)  # 5
+    print(inorder_successor_bt(root, 3).data)  # 5
+    print(inorder_successor_bt(root, 2).data)  # 3
+    print(inorder_successor_bt(root, 5).data)  # 7
+    #print(inorder_successor_bt(root, 8).data)  # None
+
+    d = [6, 1, 8, 3, 2, 4]
+    root = None
+    for v in d:
+        root = insert(root, v)
+
+    print(inorder_successor(root, 4).data)  # 6
+    print(inorder_successor_bt(root, 4).data)  # 6
+
+test_33()
