@@ -15,17 +15,17 @@ from lib.util import swap
 def heapify(a, root, l):
     left    = 2*root
     right   = (2*root)+1
-    min_index = root
+    max_index = root
 
-
+    # make root's value max(root, left, right)
     if left < l and a[root] < a[left]:
-        min_index = left
-    if right < l and a[min_index] < a[right]:
-        min_index = right
+        max_index = left
+    if right < l and a[max_index] < a[right]:
+        max_index = right
 
-    if min_index != root:
-        swap(a, root, min_index)
-        heapify(a, min_index, l)
+    if max_index != root:
+        swap(a, root, max_index)
+        heapify(a, max_index, l)
 
 def heap_sort(a):
     l = len(a)-1
