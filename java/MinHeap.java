@@ -26,15 +26,9 @@ class MinHeap {
 	}
 
 	private void swap(int a, int b){
-		HeapNode temp = heapArray[a];
+		Object temp = heapArray[a];
 		heapArray[a] = heapArray[b];
 		heapArray[b] = temp;
-
-		// Also update the pointersToMinHeap of both nodes so that trie has latest updated
-		// state of heap
-		int t = heapArray[a].trieNode.pointerToHeap;
-		heapArray[a].trieNode.pointerToHeap = heapArray[b].trieNode.pointerToHeap;
-		heapArray[b].trieNode.pointerToHeap = t;
 	}
 
 	public void minHeapify(int pos){
