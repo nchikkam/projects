@@ -1,3 +1,5 @@
+package snippets;
+
 import com.sun.org.apache.xerces.internal.parsers.DOMParser;
 import org.xml.sax.InputSource;
 
@@ -12,9 +14,9 @@ import java.time.format.DateTimeFormatter;
 
 import org.w3c.dom.*;
 
-public class Demo {
+public class LatLongCityFinder {
     private String urlTemplate =
-                "https://maps.googleapis.com/maps/api/timezone/xml?location=%s&timestamp=1&sensor=false";
+            "https://maps.googleapis.com/maps/api/timezone/xml?location=%s&timestamp=1&sensor=false";
 
     public String [] getCityAndTimeZoneInfo(String latlon) throws Exception{
         String location ="",
@@ -40,13 +42,13 @@ public class Demo {
             ex.printStackTrace();
         }
         return new String[] {
-            location,
-            timezone
+                location,
+                timezone
         };
     }
 
     public static void main(String[] args) throws Exception{
-        Demo d = new Demo();
+        LatLongCityFinder d = new LatLongCityFinder();
 
         String [] inputs = {
                 "2016-09-06 00:15:49,52.507629,13.1459606",
