@@ -32,6 +32,7 @@ public class KthElementFinder {
 
         while (l < r){
             pivot = a[k];  // record the pivot, it will always be at kth spot
+
             i = l;
             j = r;
             // spot the pivot location
