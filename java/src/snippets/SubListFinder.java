@@ -8,13 +8,12 @@ public class SubListFinder {
 
     public static int findSubList(LinkedList list, LinkedList sublist){
         int pos = 0;
-        if(sublist!=null) {
-            while (list != null) {
+        if(sublist!=null) {           // O(N*M)
+            while (list != null) {    // O(N) - N is length of list
                 LinkedList main = list;
                 LinkedList sub = sublist;
 
-                while (sub != null) {
-                    System.out.println("Comparing: " + main.data + " " + sub.data);
+                while (sub != null) {   // O(M)  - M is length of sublist
                     if (main.data != sub.data)
                         break;
                     main = main.next;
