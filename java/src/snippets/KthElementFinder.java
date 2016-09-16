@@ -49,6 +49,22 @@ public class KthElementFinder {
         return pivot;
     }
 
+    /*
+        Found this interesting on leetcode:
+        public int findKthLargest(int[] nums, int k) {
+            PriorityQueue<Integer> q = new PriorityQueue<Integer>(k);
+            for(int i: nums){
+                q.offer(i);
+
+                if(q.size()>k){
+                    q.poll();
+                }
+            }
+
+            return q.peek();
+        }
+     */
+
     public static void main(String[] args){
         int a[] = {2, 4, 1, 6, 7, 9, 8, 5, 3};
         System.out.println(kthElement(a, 8));
