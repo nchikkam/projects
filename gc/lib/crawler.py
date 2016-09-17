@@ -161,7 +161,7 @@ class SiteMap():
             new_page = urlparse(href)
 
             # add to the queue only it it doesn't cause a cycle
-            # assumption: if a link ends with gocardless.com, assuming it can be crawled to make sitemap complete
+            # assumption: if a link ends with domain.com, assuming it can be crawled to make sitemap complete
             if  not str(new_page.netloc).endswith(self.start_page):          # doesn't belong to domain
                 continue
 
@@ -244,7 +244,7 @@ class SiteMap():
         :return:   None
         """
         page = self.unvisited.pop()
-        # if robot.txt is defined, use Disallow to avoid pages. gocardless.robot.txt doesn't exist so the crawler
+        # if robot.txt is defined, use Disallow to avoid pages. domain.robot.txt doesn't exist so the crawler
         # must find all the pages for report.
         logging.info("Starting to Crawl Page: " + page)
 

@@ -15,6 +15,7 @@ public class CellIdentifier {
             number = (number/base)-1;
             cell = a[rem] + cell;
         }
+        Boolean b;
         return cell;
     }
 
