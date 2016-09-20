@@ -1,9 +1,14 @@
-import org.junit.Test;
+package tests;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
+import org.testng.annotations.Test;
+import org.testng.Assert;
+import snippets.ComplementaryPairs;
 
-public class ComplementaryPairsTests {
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
+
+
+public class ComplimentaryPairsTests {
     @Test
     public void verifyComplimentaryPairsFor2Elements(){
         int []a = {1, 2};

@@ -1,3 +1,5 @@
+package snippets;
+
 import java.util.HashMap;
 import java.util.Arrays;
 
