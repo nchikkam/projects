@@ -2,7 +2,7 @@ package snippets;
 
 public class PeakElement {
 
-    // the key is just any element which is peak is solution.
+    // The key is just any element which is peak is solution.
     public static int peak(int []a, int start, int end){  // bin search works !
         int mid = (start + end)/2;
         if (mid == a.length-1 || mid == 0) return mid;
