@@ -11,17 +11,17 @@ public class MinimumSizeSubArraySumTests {
         int [] a = {2,3,1,2,4,3};
         int s = 7;
         Assert.assertEquals(
-            MinimumSizeSubArraySum.minimumSizeSubArraySum(a, s),
+            MinimumSizeSubArraySum.smallestSubWithSum(a, s),
             2
         );
     }
 
     @Test
     public void test(){
-        int [] a = {2,3,1,1,8,3};
+        int [] a = {2,1,3,1,1,8,3};
         int s = 4;
         Assert.assertEquals(
-                MinimumSizeSubArraySum.minimumSizeSubArraySum(a, s),
+                MinimumSizeSubArraySum.smallestSubWithSum(a, s),
                 2
         );
     }
