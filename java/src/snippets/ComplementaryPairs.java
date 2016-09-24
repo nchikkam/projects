@@ -14,27 +14,6 @@ public class ComplementaryPairs{
 		a[j] = temp;
 	}
 
-	// O(NlogN) algorithm to sort an array, basically it uses divide
-	// and conquer approach to prepare the array into two parts w.r.t
-	// an element called pivot that directs the recursion into two
-	// parts to sort left sublist and right sublist.
-	private void qSort(int A[], int start, int end){
-		int last;
-		if ( start >= end) return;
-		swap(A, start, (start+end)/2);
-		last = start;
-		for(int i=start+1; i <=end; i++){
-			if (A[i] < A[start]) {
-				last += 1;
-				swap(A, last, i);
-			}
-		}
-		swap(A, start, last);
-		qSort(A, start, last-1);
-		qSort(A, last+1, end);
-
-	}
-
 	/*
 		There are other solutions to this that use O(N) space and O(N) time
 		complexity, which are commented for idea sharing.
@@ -52,7 +31,7 @@ public class ComplementaryPairs{
 
 	 */
 	public boolean findComplimentaryPair_O_NlogN(int []a, int k, int[] basket){
-		qSort(a, 0, a.length-1);
+		QuickSort.qSort(a, 0, a.length-1);
 		int i = 0;		//left pointer
 		int j = a.length - 1;  // right pointer
 
