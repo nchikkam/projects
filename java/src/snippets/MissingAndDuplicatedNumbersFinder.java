@@ -1,6 +1,6 @@
 package snippets;
 
-public class MissingTwoNumbersFinder {
+public class MissingAndDuplicatedNumbersFinder {
 
     public static int [] findMissingNumbers(int [] a){
         int xor = 0;
@@ -9,7 +9,7 @@ public class MissingTwoNumbersFinder {
             xor ^= n;
 
         // xor all n for 1<= i <= n
-        for(int i =1; i <= a.length+2; i++)
+        for(int i =1; i <= a.length; i++)   // duplicate, the logic is same except that loop runs till length times.
             xor ^= i;
 
         xor = xor & ~(xor-1);  // right most set bit
@@ -22,7 +22,7 @@ public class MissingTwoNumbersFinder {
                 y ^= n;
         }
 
-        for(int i =1; i <= a.length+2; i++) {
+        for(int i =1; i <= a.length; i++) {
             if ((i & xor) > 0)
                 x ^= i;
             else
@@ -30,14 +30,19 @@ public class MissingTwoNumbersFinder {
         }
 
         return new int[]{
-            x, y
+                x, y
         };
     }
 
     public static void main(String[] args){
-        int a[] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+        int a[] = {3, 1, 3};
+        int []data = findMissingNumbers(a);
+        System.out.print(data[0] + " " + data[1]);
 
-        int [] nums = findMissingNumbers(a);
-        System.out.println(nums[0] + " " + nums[1]);
+        System.out.println();
+
+        int b[] = {4, 3, 6, 2, 1, 1};
+        int []d = findMissingNumbers(b);
+        System.out.print(d[0] + " " + d[1]);
     }
 }
