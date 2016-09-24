@@ -1,6 +1,6 @@
 package snippets;
 
-public class PeakElement {
+public class FindLocalMaxima {
 
     // The key is just any element which is peak is solution.
     public static int peak(int []a, int start, int end){  // bin search works !
