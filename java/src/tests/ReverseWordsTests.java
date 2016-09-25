@@ -2,7 +2,7 @@ package tests;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import snippets.ReverseWords;
+import snippets.strings.ReverseWords;
 
 public class ReverseWordsTests {
 

@@ -2,7 +2,7 @@ package tests;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import snippets.AnagramChecker;
+import snippets.strings.AnagramGrouper;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -22,7 +22,7 @@ public class AnagramCheckerTests {
         };
 
         Hashtable<String, ArrayList<String>> data =
-                AnagramChecker.groupAnagrams(randomStrings);
+                AnagramGrouper.groupAnagrams(randomStrings);
 
         /*for(String signature: data.keySet()){
             ArrayList<String> strs = data.get(signature);
@@ -51,7 +51,7 @@ public class AnagramCheckerTests {
 
         Assert.assertEquals(
             3,
-            AnagramChecker.groupAnagramsWithINTSignature(randomStrings)
+            AnagramGrouper.groupAnagramsWithINTSignature(randomStrings)
         );
     }
 }

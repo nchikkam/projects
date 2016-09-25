@@ -1,14 +1,14 @@
-package snippets;
+package snippets.strings;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Hashtable;
 
-public class AnagramChecker {
+public class AnagramGrouper {
 
     public static String sort(String s){
         char [] c = s.toCharArray();
-        Arrays.sort(c);
+        Arrays.sort(c);  //another way is summing chars to int
         return new String(c);
     }
 

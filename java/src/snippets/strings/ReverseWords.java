@@ -1,4 +1,4 @@
-package snippets;
+package snippets.strings;
 
 public class ReverseWords {
     public static char[] reverseWords(char[] s){
